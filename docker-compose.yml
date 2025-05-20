@@ -1,15 +1,12 @@
-# docker-compose.yml
-
 version: "3.8"
 
 services:
   db:
-    image: mysql/mysql-server:5.7
-    platform: linux/amd64
-    container_name: mysql_coconut
+    image: mysql:8.0
+    container_name: mysql_news
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root     
       MYSQL_DATABASE: coconut_db
       MYSQL_USER: user
       MYSQL_PASSWORD: test123
@@ -17,23 +14,3 @@ services:
       - "3306:3306"
     volumes:
       - ./mysql_data:/var/lib/mysql
-    networks:
-      - ssuknet
-
-  news:
-    build:
-      context: ./News
-    container_name: flask_news
-    restart: always
-    ports:
-      - "5001:5000"
-    depends_on:
-      - db
-    env_file:
-      - ./News/.env
-    networks:
-      - ssuknet
-
-networks:
-  ssuknet:
-    driver: bridge
