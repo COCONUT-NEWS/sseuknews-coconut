@@ -17,6 +17,7 @@ resource "aws_subnet" "public_subnet_a" {
   tags = {
     Name = "public_subnet_a"
   }
+  depends_on = [ aws_vpc.eks_vpc ]
 }
 
 # Public Subnet2 (2개 AZ)
@@ -28,6 +29,7 @@ resource "aws_subnet" "public_subnet_b" {
   tags = {
     Name = "public_subnet_b"
   }
+  depends_on = [ aws_vpc.eks_vpc ]
 }
 
 # Private Subnet1 (2개 AZ)
@@ -38,6 +40,7 @@ resource "aws_subnet" "private_subnet_a" {
   tags = {
     Name = "private_subnet_a"
   }
+  depends_on = [ aws_vpc.eks_vpc ]
 }
 
 # Private Subnet2 (2개 AZ)
@@ -48,6 +51,7 @@ resource "aws_subnet" "private_subnet_b" {
   tags = {
     Name = "private_subnet_b"
   }
+  depends_on = [ aws_vpc.eks_vpc ]
 }
 
 # Private Subnet3 (2개 AZ)
@@ -58,6 +62,7 @@ resource "aws_subnet" "private_subnet_c" {
   tags = {
     Name = "private_subnet_c"
   }
+  depends_on = [ aws_vpc.eks_vpc ]
 }
 
 # Private Subnet4 (2개 AZ)
@@ -68,6 +73,7 @@ resource "aws_subnet" "private_subnet_d" {
   tags = {
     Name = "private_subnet_d"
   }
+  depends_on = [ aws_vpc.eks_vpc ]
 }
 
 
@@ -78,6 +84,7 @@ resource "aws_internet_gateway" "igw" {
   tags = {
     Name = "eks-igw"
   }
+  depends_on = [ aws_vpc.eks_vpc ]
 }
 
 # Nat를 위한 동적IP 할당 (AZ a)
@@ -94,7 +101,11 @@ resource "aws_eip" "nat_eip_b" {
 resource "aws_nat_gateway" "eks_ngw_a" {
   allocation_id = aws_eip.nat_eip_a.id
   subnet_id     = aws_subnet.public_subnet_a.id
-  depends_on = [aws_internet_gateway.igw]
+  depends_on = [
+                aws_internet_gateway.igw, 
+                aws_eip.nat_eip_a,
+                aws_subnet.private_subnet_a
+                ]
 
   tags = {
     Name = "eks_ngw_a"
@@ -105,7 +116,11 @@ resource "aws_nat_gateway" "eks_ngw_a" {
 resource "aws_nat_gateway" "eks_ngw_b" {
   allocation_id = aws_eip.nat_eip_b.id
   subnet_id     = aws_subnet.public_subnet_b.id
-  depends_on = [aws_internet_gateway.igw]
+  depends_on = [
+                aws_internet_gateway.igw, 
+                aws_eip.nat_eip_b,
+                aws_subnet.public_subnet_b
+                ]
 
   tags = {
     Name = "eks_ngw_b"
@@ -125,18 +140,21 @@ resource "aws_route_table" "public_rt" {
   tags = {
     Name = "eks_public_rt"
   }
+  depends_on = [ aws_vpc.eks_vpc ]
 }
 
 # 퍼블릭 서브넷a 에 라우팅 테이블 연결
 resource "aws_route_table_association" "public_assoc_a" {
   subnet_id      = aws_subnet.public_subnet_a.id
   route_table_id = aws_route_table.public_rt.id
+  depends_on = [ aws_subnet.public_subnet_a ]
 }
 
 # 퍼블릭 서브넷b 에 라우팅 테이블 연결
 resource "aws_route_table_association" "public_assoc_b" {
   subnet_id      = aws_subnet.public_subnet_b.id
   route_table_id = aws_route_table.public_rt.id
+  depends_on = [ aws_subnet.public_subnet_b ]
 }
 
 # NAT 게이트웨이를 통한 라우팅 테이블 생성
@@ -150,12 +168,14 @@ resource "aws_route_table" "private_rt_a" {
   tags = {
     Name = "eks_private_rt_a"
   }
+  depends_on = [ aws_vpc.eks_vpc ]
 }
 
 # 프라이빗 서브넷 c에 라우팅 테이블 연결
 resource "aws_route_table_association" "private_assoc_a" {
   subnet_id      = aws_subnet.private_subnet_c.id
   route_table_id = aws_route_table.private_rt_a.id
+  depends_on = [ aws_subnet.private_subnet_c, aws_route_table.private_rt_a ]
 }
 
 # NAT 게이트웨이를 통한 라우팅 테이블 생성
@@ -169,11 +189,13 @@ resource "aws_route_table" "private_rt_b" {
   tags = {
     Name = "eks_private_rt_b"
   }
+  depends_on = [ aws_vpc.eks_vpc, aws_nat_gateway.eks_ngw_b ]
 }
 # 프라이빗 서브넷 d에 라우팅 테이블 연결
 resource "aws_route_table_association" "private_assoc_b" {
   subnet_id      = aws_subnet.private_subnet_d.id
   route_table_id = aws_route_table.private_rt_b.id
+  depends_on = [ aws_route_table.private_rt_b, aws_subnet.private_subnet_d ]
 }
 
 
