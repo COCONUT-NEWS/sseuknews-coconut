@@ -1,0 +1,56 @@
+# Python 기본
+__pycache__/
+*.py[cod]
+*.so
+
+# 환경 설정
+.env
+.venv/
+env/
+venv/
+ENV/
+
+# Flask
+instance/*
+!instance/.gitignore
+.webassets-cache
+
+# 빌드/패키징
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+
+# 테스트/커버리지
+.coverage
+.cache
+.pytest_cache/
+htmlcov/
+
+# 로그
+*.log
+
+# React
+node_modules/
+bower_components
+.DS_*
+logs
+**/*.backup.*
+**/*.back.*
+
+# Terraform
+**/.terraform/*
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+.terraformrc
+terraform.rc
+
+# key
+*.env 
