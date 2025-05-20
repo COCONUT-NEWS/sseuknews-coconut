@@ -1,7 +1,3 @@
-module "vpc" {
-  source = "../vpc"
-}
-
 
 resource "aws_launch_template" "instance" {
         name = "coconut_web"
@@ -30,7 +26,30 @@ data "aws_key_pair" "example" {
 
 resource "aws_security_group" "instance" {
     name = "cocounut"
-    vpc_id = module.vpc.vpc_id
+    vpc_id = var.vpc_id
+
+
+    ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
 
     tags= {
         Name = "coconut"
@@ -44,7 +63,7 @@ resource "aws_autoscaling_group" "example" {
     min_size = 2
     max_size = 4
     desired_capacity = 2
-    vpc_zone_identifier = module.vpc.private_subnet_ids
+    vpc_zone_identifier = var.private_subnet_ids
 
     launch_template {
         id      = aws_launch_template.instance.id

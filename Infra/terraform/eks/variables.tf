@@ -1,54 +1,23 @@
 variable "cluster_name" {
     description = "EKS 클러스터 이름"
     type        = string
+    default = "coconut_cluster"
 }
 
 variable "k8s_cluster_version" {
     description = "EKS 클러스터 버전"
     type        = string
+    default = "1.32"
 }
 
 
 variable "public_access_cidrs" {
     description = "EKS 클러스터 퍼블릭 엑세스 CIDR"
     type        = list(string)
-    default = [  ]
+    default = [ "0.0.0.0/0" ]
 }
 
 
-variable "security_group_ids" {
-    description = "EKS cluster vpc security config"
-    type = list(string)
-    default = [  ]
-}
-
-variable "private_subnets" {
-    description = "EKS cluster vpc private subnets"
-    type = list(string)
-    default = [  ]
-}
-
-variable "node_specs" {
-    description = "node group specs for eks cluster"
-    type = list(object({
-        name = string
-        instance_types = list(string)
-        volume_size = number
-        desired_size = number
-        min_size = number
-        max_size = number
-    }))
-    default = [
-        {
-            name = "t3.large"
-            instance_types = ["t3.large"]
-            volume_size = 50
-            desired_size = 3
-            min_size = 3
-            max_size = 3
-        }
-    ]
-}
 
 variable "eks_cluster_role_policys" {
     description = "eks cluster role policy arns"
@@ -114,4 +83,18 @@ variable "addons" {
         name = "aws-ebs-csi-driver"
         }
     ]
+}
+variable "subnet_ids" {
+    type = list(string)
+}
+variable "vpc_id" {
+    type = string
+}
+
+variable "lunch_template" {
+    type = string
+}
+
+variable "security_group" {
+    type = string
 }
