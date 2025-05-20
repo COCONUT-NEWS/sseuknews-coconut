@@ -1,8 +1,13 @@
+module "vpc" {
+  source = "../vpc"
+}
+
+
 resource "aws_launch_template" "instance" {
         name = "coconut_web"
         image_id = "ami-037843ed9009f7d41"
         instance_type = "t3.micro"
-        key_name = aws_key_pair.coconut_key.key_name
+        key_name = "coconutkey"
         vpc_security_group_ids = [aws_security_group.instance.id] 
         user_data = base64encode(<<-EOF
                 #!/bin/bash
@@ -18,14 +23,14 @@ resource "aws_launch_template" "instance" {
 
 }
 
-# 키페어 생성
+# 키페어 연결결
 data "aws_key_pair" "example" {
   key_name = "coconutkey"
 }
 
 resource "aws_security_group" "instance" {
     name = "cocounut"
-    vpc_id = data.aws_vpc.default.id
+    vpc_id = module.vpc.vpc_id
 
     tags= {
         Name = "coconut"
@@ -33,23 +38,13 @@ resource "aws_security_group" "instance" {
     
 }
 
-data "aws_vpc" "default" {
-    default = true
-  
-}
 
-data "aws_subnets" "example" {
-  filter {
-    name   = "vpc-id"
-    values = [data.aws_vpc.default.id]
-  }
-}
 
 resource "aws_autoscaling_group" "example" {
     min_size = 2
     max_size = 4
     desired_capacity = 2
-    vpc_zone_identifier = data.aws_subnets.example.ids
+    vpc_zone_identifier = module.vpc.private_subnet_ids
 
     launch_template {
         id      = aws_launch_template.instance.id
