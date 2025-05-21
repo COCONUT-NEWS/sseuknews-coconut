@@ -116,3 +116,4 @@ variable "vpc_id" {
 variable "sg" {
     type = string
 }
+
