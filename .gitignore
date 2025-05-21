@@ -53,5 +53,4 @@ override.tf.json
 terraform.rc
 .terraform.*
 
-# key
-*.env 
+~/.aws
