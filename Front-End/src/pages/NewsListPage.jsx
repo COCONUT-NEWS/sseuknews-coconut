@@ -30,7 +30,7 @@ export default function NewsListPage({ category, onBack }) {
 
     const filteredNews = selectedKeyword
       ? currentNews.filter((news) => news.title.includes(selectedKeyword))
-      : currentNews;
+      : currentNews.slice(0, 20);
       
   return (
     <div style={{ paddingTop: '20px' }}>
