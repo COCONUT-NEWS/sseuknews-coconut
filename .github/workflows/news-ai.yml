@@ -1,0 +1,27 @@
+name: Build and Push News AI
+
+on:
+  push:
+    paths:
+      - 'NewsAI/**'
+      - '.github/workflows/news-ai.yml'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Log in to Harbor
+      run: echo "${{ secrets.HARBOR_PASSWORD }}" | docker login ${{ secrets.HARBOR_URL }} -u ${{ secrets.HARBOR_USERNAME }} --password-stdin
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ secrets.HARBOR_URL }}/sseuk/news-ai:latest ./NewsAI
+
+    - name: Push Docker image
+      run: |
+        docker push ${{ secrets.HARBOR_URL }}/sseuk/news-ai:latest
+
