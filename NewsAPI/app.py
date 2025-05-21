@@ -1,12 +1,9 @@
+# NewsAPI/app.py
+
 from flask import Flask, Response, request
 import pymysql
 import json
-import os
-import sys
-
-# config 경로 설정
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../config')))
-from config import DB_CONFIG
+from config.config import DB_CONFIG
 
 app = Flask(__name__)
 

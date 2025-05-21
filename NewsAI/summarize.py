@@ -1,3 +1,5 @@
+# NewsAI/summarize.py
+
 import boto3
 import json
 import os

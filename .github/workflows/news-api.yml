@@ -13,8 +13,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
+    - name: Add Harbor CA cert (Self-signed)
+      run: |
+        mkdir -p /etc/docker/certs.d/${{ secrets.HARBOR_URL }}
+        echo "${{ secrets.HARBOR_CA_B64 }}" | base64 -d > /etc/docker/certs.d/${{ secrets.HARBOR_URL }}/ca.crt
+
     - name: Log in to Harbor
-      run: echo "${{ secrets.HARBOR_PASSWORD }}" | docker login ${{ secrets.HARBOR_URL }} -u ${{ secrets.HARBOR_USERNAME }} --password-stdin
+      run: |
+        echo "${{ secrets.HARBOR_PASSWORD }}" | docker login ${{ secrets.HARBOR_URL }} -u "${{ secrets.HARBOR_USERNAME }}" --password-stdin
 
     - name: Build Docker image
       run: |

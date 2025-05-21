@@ -1,10 +1,9 @@
-# config.py
-
+# NewsAI/config/config.py
 DB_CONFIG = {
-    "host": "localhost",
+    "host": "mysql_ai",
     "user": "user",
     "password": "test123",
-    "database": "coconut_db",
+    "database": "coconut_ai",
     "charset": "utf8mb4"
 }
 
