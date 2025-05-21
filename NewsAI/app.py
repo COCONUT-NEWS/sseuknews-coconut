@@ -1,3 +1,5 @@
+# NewsAI/app.py
+
 from flask import Flask, jsonify
 import pymysql
 from summarize import summarize_with_bedrock
