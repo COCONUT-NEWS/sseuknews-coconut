@@ -30,7 +30,7 @@ export default function NewsListPage({ category, onBack }) {
 
     const filteredNews = selectedKeyword
       ? currentNews.filter((news) => news.title.includes(selectedKeyword))
-      : currentNews;
+      : currentNews.slice(0, 20);
       
   return (
     <div style={{ paddingTop: '20px' }}>
@@ -57,6 +57,7 @@ export default function NewsListPage({ category, onBack }) {
               key={news.id}
               title={news.title}
               content={news.content}
+              keyword={selectedKeyword}
               onClick={() => {
                 console.log('뉴스 클릭됨:', news);
                 // 추후 상세 페이지 연결 가능
