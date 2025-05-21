@@ -1,0 +1,32 @@
+name: Build and Push News API
+
+on:
+  push:
+    branches:
+      - main
+      
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Add Harbor CA cert (Self-signed)
+      run: |
+        sudo mkdir -p /etc/docker/certs.d/${{ secrets.HARBOR_URL }}
+        echo "${{ secrets.HARBOR_CA_B64 }}" | base64 -d | sudo tee /etc/docker/certs.d/${{ secrets.HARBOR_URL }}/ca.crt > /dev/null
+
+    - name: Log in to Harbor
+      run: |
+        echo "${{ secrets.HARBOR_PASSWORD }}" | docker login ${{ secrets.HARBOR_URL }} -u "${{ secrets.HARBOR_USERNAME }}" --password-stdin
+
+    - name: Build Docker image
+      run: |
+        docker build -t ${{ secrets.HARBOR_URL }}/sseuk/news-api:latest ./NewsAPI
+
+    - name: Push Docker image
+      run: |
+        docker push ${{ secrets.HARBOR_URL }}/sseuk/news-api:latest
+

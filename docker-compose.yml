@@ -1,16 +1,46 @@
+# docker-compose.yml
+
 version: "3.8"
 
 services:
-  db:
+  mysql_news:
     image: mysql:8.0
     container_name: mysql_news
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root     
-      MYSQL_DATABASE: coconut_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: coconut_news
       MYSQL_USER: user
       MYSQL_PASSWORD: test123
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - ./mysql_data_news:/var/lib/mysql
+
+  mysql_ai:
+    image: mysql:8.0
+    container_name: mysql_ai
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: coconut_ai
+      MYSQL_USER: user
+      MYSQL_PASSWORD: test123
+    ports:
+      - "3308:3306"
+    volumes:
+      - ./mysql_data_ai:/var/lib/mysql
+
+  mysql_api:
+    image: mysql:8.0
+    container_name: mysql_api
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: coconut_api
+      MYSQL_USER: user
+      MYSQL_PASSWORD: test123
+    ports:
+      - "3309:3306"
+    volumes:
+      - ./mysql_data_api:/var/lib/mysql
