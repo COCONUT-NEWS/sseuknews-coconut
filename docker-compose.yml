@@ -3,6 +3,24 @@
 version: "3.8"
 
 services:
+  news:
+    build: ./News
+    command: ["python", "Crawling.py"]
+    ports:
+      - "8008:8008"
+
+  news_ai:
+    build: ./NewsAI
+    ports:
+      - "8009:8008"
+    env_file:
+    - ./NewsAI/.env
+
+  news_api:
+    build: ./NewsAPI
+    ports:
+      - "8010:8008"
+
   mysql_news:
     image: mysql:8.0
     container_name: mysql_news

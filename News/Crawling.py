@@ -6,7 +6,7 @@ import datetime, time
 import pymysql
 from collections import Counter
 from konlpy.tag import Okt
-from config.config import DB_CONFIG
+from config import DB_CONFIG_API, DB_CONFIGS
 
 yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%Y%m%d')
 
@@ -75,58 +75,60 @@ for name, sid in categories.items():
 
 print(f"\n🧾 전체 수집 완료: {len(all_news)}개 뉴스 수집됨.")
 
-# ✅ 뉴스 저장
 def save_news_to_mysql(news_data):
-    conn, cursor = None, None
-    try:
-        conn = pymysql.connect(**DB_CONFIG)
-        cursor = conn.cursor()
+    for DB_CONFIG in DB_CONFIGS:
+        conn, cursor = None, None
+        try:
+            conn = pymysql.connect(**DB_CONFIG)
+            cursor = conn.cursor()
 
-        # 모든 테이블 생성
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS news (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                category VARCHAR(50),
-                title TEXT,
-                url TEXT,
-                content LONGTEXT,
-                reporter VARCHAR(100),
-                published_at DATETIME,
-                source VARCHAR(100),
-                crawled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-            );
-        """)
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS top_keywords (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                category VARCHAR(50),
-                keyword VARCHAR(50),
-                count INT,
-                crawled_at DATE DEFAULT (CURRENT_DATE)
-            );
-        """)
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS keyword_news_map (
-                id INT AUTO_INCREMENT PRIMARY KEY,
-                keyword VARCHAR(50),
-                news_id INT,
-                FOREIGN KEY (news_id) REFERENCES news(id) ON DELETE CASCADE
-            );
-        """)
+            # 모든 테이블 생성
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS news (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    category VARCHAR(50),
+                    title TEXT,
+                    url TEXT,
+                    content LONGTEXT,
+                    reporter VARCHAR(100),
+                    published_at DATETIME,
+                    source VARCHAR(100),
+                    crawled_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+                );
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS top_keywords (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    category VARCHAR(50),
+                    keyword VARCHAR(50),
+                    count INT,
+                    crawled_at DATE DEFAULT (CURRENT_DATE)
+                );
+            """)
+            cursor.execute("""
+                CREATE TABLE IF NOT EXISTS keyword_news_map (
+                    id INT AUTO_INCREMENT PRIMARY KEY,
+                    keyword VARCHAR(50),
+                    news_id INT,
+                    FOREIGN KEY (news_id) REFERENCES news(id) ON DELETE CASCADE
+                );
+            """)
 
-        # 뉴스 저장
-        sql = """
-            INSERT INTO news (category, title, url, content, reporter, published_at, source)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """
-        cursor.executemany(sql, news_data)
-        conn.commit()
-        print(f"🗃️ 뉴스 저장 완료: {len(news_data)}건")
-    except Exception as e:
-        print(f"뉴스 저장 실패: {e}")
-    finally:
-        if cursor: cursor.close()
-        if conn: conn.close()
+            # 뉴스 저장
+            sql = """
+                INSERT INTO news (category, title, url, content, reporter, published_at, source)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor.executemany(sql, news_data)
+            conn.commit()
+            print(f"🗃️ [{DB_CONFIG['database']}] 뉴스 저장 완료: {len(news_data)}건")
+
+        except Exception as e:
+            print(f"❌ [{DB_CONFIG['database']}] 뉴스 저장 실패: {e}")
+        finally:
+            if cursor: cursor.close()
+            if conn: conn.close()
+
 
 # ✅ 키워드 추출
 def extract_top_keywords(news_data, top_n=6):
@@ -144,7 +146,7 @@ def extract_top_keywords(news_data, top_n=6):
 
 # ✅ 키워드 저장
 def save_top_keywords_to_mysql(top_keywords):
-    conn = pymysql.connect(**DB_CONFIG)
+    conn = pymysql.connect(**DB_CONFIG_API)
     cursor = conn.cursor()
     sql = "INSERT INTO top_keywords (category, keyword, count) VALUES (%s, %s, %s)"
     for category, keywords in top_keywords.items():
@@ -157,7 +159,7 @@ def save_top_keywords_to_mysql(top_keywords):
 
 # ✅ 키워드-뉴스 매핑 저장
 def save_keyword_news_mapping(top_keywords):
-    conn = pymysql.connect(**DB_CONFIG)
+    conn = pymysql.connect(**DB_CONFIG_API)
     cursor = conn.cursor()
     cursor.execute("SELECT id, title, content FROM news WHERE DATE(crawled_at) = CURDATE()")
     news_rows = cursor.fetchall()
