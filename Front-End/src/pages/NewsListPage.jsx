@@ -13,7 +13,7 @@ import { categoryNewsData } from "../data/newsData";
 import NewsCard from "../components/NewsCard";
 
 
-export default function NewsListPage({ category, onBack }) {
+export default function NewsListPage({ category, onBack, onSelectNews }) {
     const categoryIcons = {
         정치: politicsIcon,
         경제: economyIcon,
@@ -58,10 +58,7 @@ export default function NewsListPage({ category, onBack }) {
               title={news.title}
               content={news.content}
               keyword={selectedKeyword}
-              onClick={() => {
-                console.log('뉴스 클릭됨:', news);
-                // 추후 상세 페이지 연결 가능
-              }}
+              onClick={() => onSelectNews(news)}
             />
           ))}
         </div>
