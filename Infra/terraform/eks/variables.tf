@@ -64,6 +64,28 @@ variable "node_role_policys" {
 }
 
 
+variable "node_specs" {
+    description = "node group specs for eks cluster"
+    type = list(object({
+        name = string
+        instance_types = list(string)
+        volume_size = number
+        desired_size = number
+        min_size = number
+        max_size = number
+    }))
+    default = [
+        {
+            name = "t3.large"
+            instance_types = ["t3.large"]
+            volume_size = 50
+            desired_size = 2
+            min_size = 2
+            max_size = 4
+        }
+    ]
+}
+
 variable "addons" {
   type = list(object({
     name = string
@@ -91,10 +113,14 @@ variable "vpc_id" {
     type = string
 }
 
-variable "lunch_template" {
+variable "sg" {
     type = string
 }
 
-variable "security_group" {
-    type = string
-}
+# variable "lunch_template" {
+#     type = string
+# }
+
+# variable "security_group" {
+#     type = string
+# }

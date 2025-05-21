@@ -13,3 +13,4 @@ output "eks_endpoint" {
 output "eks_identity" {
   value = aws_eks_cluster.this.identity
 }
+

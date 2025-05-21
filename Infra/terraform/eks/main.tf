@@ -14,7 +14,7 @@ resource "aws_eks_cluster" "this" {
 
     #클러스터 네트워크 설정
     vpc_config {
-        security_group_ids     = [var.security_group]
+        security_group_ids     = [var.sg]
         subnet_ids              = var.subnet_ids
         endpoint_private_access = true
         endpoint_public_access  = true
@@ -55,6 +55,25 @@ data "aws_iam_policy_document" "eks" {
         }
     }
 }
+# resource "kubernetes_config_map" "aws_auth" {
+#   metadata {
+#     name      = "aws-auth"
+#     namespace = "kube-system"
+#   }
+
+#   data = {
+#     mapRoles = yamlencode([
+#       {
+#         rolearn  = aws_iam_role.node.arn
+#         username = "system:node:{{EC2PrivateDNSName}}"
+#         groups   = [
+#           "system:bootstrappers",
+#           "system:nodes"
+#         ]
+#       }
+#     ])
+#   }
+# }
 
 resource "aws_iam_role_policy_attachment" "eks" {
     for_each = { for policy in var.eks_cluster_role_policys : policy.name => policy }
@@ -86,16 +105,18 @@ resource "aws_iam_role_policy_attachment" "node" {
 
 
 resource "aws_eks_node_group" "this" {
-    #for_each = { for spec in var.node_specs : spec.name => spec }
+    for_each = { for spec in var.node_specs : spec.name => spec }
     cluster_name    = var.cluster_name
     node_group_name = "coconut_web_ng"
     node_role_arn   = aws_iam_role.node.arn
     subnet_ids      = var.subnet_ids
+
     
-    launch_template {
-      id = var.lunch_template
-      version = var.launch_template.version
-    }
+    
+    # launch_template {
+    #   id = var.lunch_template
+    #   version = "$Default"
+    # }
 
     labels = {
         "role" = "coconut"
@@ -110,7 +131,7 @@ resource "aws_eks_node_group" "this" {
     depends_on = [
         aws_iam_role_policy_attachment.node,
         aws_eks_cluster.this,
-        var.lunch_template
+        # var.lunch_template
     ]
 
     tags = {
