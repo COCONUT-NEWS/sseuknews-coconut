@@ -6,12 +6,7 @@ import datetime, time
 import pymysql
 from collections import Counter
 from konlpy.tag import Okt
-import sys
-import os
-
-# config 경로 설정
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../config')))
-from config import DB_CONFIG
+from config.config import DB_CONFIG
 
 yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%Y%m%d')
 

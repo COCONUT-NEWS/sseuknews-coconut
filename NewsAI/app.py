@@ -3,12 +3,7 @@
 from flask import Flask, jsonify
 import pymysql
 from summarize import summarize_with_bedrock
-import os
-import sys
-
-# config 경로 추가
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../config')))
-from config import AWS_REGION, AWS_PROFILE, DB_CONFIG
+from config.config import DB_CONFIG
 
 app = Flask(__name__)
 
