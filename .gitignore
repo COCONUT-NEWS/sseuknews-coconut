@@ -54,3 +54,5 @@ terraform.rc
 .terraform.*
 
 ~/.aws
+
+mysql_data/
