@@ -14,6 +14,7 @@ resource "aws_eks_cluster" "this" {
 
     #클러스터 네트워크 설정
     vpc_config {
+        security_group_ids     = [var.sg]
         subnet_ids              = var.subnet_ids
         endpoint_private_access = true
         endpoint_public_access  = true
@@ -54,25 +55,7 @@ data "aws_iam_policy_document" "eks" {
         }
     }
 }
-# resource "kubernetes_config_map" "aws_auth" {
-#   metadata {
-#     name      = "aws-auth"
-#     namespace = "kube-system"
-#   }
 
-#   data = {
-#     mapRoles = yamlencode([
-#       {
-#         rolearn  = aws_iam_role.node.arn
-#         username = "system:node:{{EC2PrivateDNSName}}"
-#         groups   = [
-#           "system:bootstrappers",
-#           "system:nodes"
-#         ]
-#       }
-#     ])
-#   }
-# }
 
 resource "aws_iam_role_policy_attachment" "eks" {
     for_each = { for policy in var.eks_cluster_role_policys : policy.name => policy }
