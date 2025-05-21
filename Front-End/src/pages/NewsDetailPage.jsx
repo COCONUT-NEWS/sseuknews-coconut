@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import HeaderBar from "../components/HeaderBar";
+import SummaryButton from '../components/SummaryButton';
+import SummaryCard from '../components/SummaryCard';
 
 export default function NewsDetailPage({ news, onBack }) {
+    const [showSummary, setShowSummary] = useState(false);
     if (!news) return null;
 
     return (
@@ -27,10 +30,14 @@ export default function NewsDetailPage({ news, onBack }) {
                 {news.title}
             </h1>
 
+            {/* 요약 버튼 */}
+            <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center'}}>
+                <SummaryButton onClick={() => setShowSummary(true)} />
+            </div>
+
             {/* 뉴스 본문 */}
             <p
                 style={{
-                // width: '350px',
                 margin: '0 8px',
                 color: '#29292A',
                 fontFamily: 'Pretendard, sans-serif',
@@ -41,6 +48,9 @@ export default function NewsDetailPage({ news, onBack }) {
             >
                 {news.content}
             </p>
+
+            {/* 요약 카드 */}
+            {showSummary && <SummaryCard onClose={() => setShowSummary(false)} />}
         </div>
     );
 }
