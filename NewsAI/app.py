@@ -3,7 +3,8 @@
 from flask import Flask, jsonify
 import pymysql
 from summarize import summarize_with_bedrock
-from config.config import DB_CONFIG
+from config import AWS_REGION, AWS_PROFILE, DB_CONFIG
+
 
 app = Flask(__name__)
 
@@ -34,4 +35,4 @@ def summarize_news(news_id):
             conn.close()
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=8009)
+    app.run(host="0.0.0.0", port=8008)
