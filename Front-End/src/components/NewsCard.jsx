@@ -1,6 +1,19 @@
 import React from 'react';
 
-export default function NewsCard({ title, content, onClick }) {
+export default function NewsCard({ title, content, keyword, onClick }) {
+  const highlightKeyword = (text, keyword) => {
+    if (!keyword || !text.includes(keyword)) return text;
+
+    const parts = text.split(new RegExp(`(${keyword})`,'gi'));
+    return parts.map((part, i) =>
+      part.toLowerCase() === keyword.toLowerCase() ? (
+        <span key={i} style={{ color: '#10B981'}}>{part}</span>
+      ) : (
+        part
+      )
+    );
+  };
+
   return (
     <div
       onClick={onClick}
@@ -28,7 +41,7 @@ export default function NewsCard({ title, content, onClick }) {
           margin: 0,
         }}
       >
-        {title}
+        {highlightKeyword(title, keyword)}
       </h3>
 
       {/* 본문 요약 */}
