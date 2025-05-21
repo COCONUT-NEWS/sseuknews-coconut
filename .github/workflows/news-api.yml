@@ -15,8 +15,8 @@ jobs:
 
     - name: Add Harbor CA cert (Self-signed)
       run: |
-        mkdir -p /etc/docker/certs.d/${{ secrets.HARBOR_URL }}
-        echo "${{ secrets.HARBOR_CA_B64 }}" | base64 -d > /etc/docker/certs.d/${{ secrets.HARBOR_URL }}/ca.crt
+        sudo mkdir -p /etc/docker/certs.d/${{ secrets.HARBOR_URL }}
+        echo "${{ secrets.HARBOR_CA_B64 }}" | base64 -d | sudo tee /etc/docker/certs.d/${{ secrets.HARBOR_URL }}/ca.crt > /dev/null
 
     - name: Log in to Harbor
       run: |
