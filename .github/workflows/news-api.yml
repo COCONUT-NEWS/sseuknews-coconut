@@ -2,10 +2,9 @@ name: Build and Push News API
 
 on:
   push:
-    paths:
-      - 'NewsAPI/**'
-      - '.github/workflows/news-api.yml'
-
+    branches:
+      - main
+      
 jobs:
   build-and-push:
     runs-on: ubuntu-latest

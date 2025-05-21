@@ -2,9 +2,8 @@ name: Build and Push News AI
 
 on:
   push:
-    paths:
-      - 'NewsAI/**'
-      - '.github/workflows/news-ai.yml'
+    branches:
+      - main
 
 jobs:
   build-and-push:

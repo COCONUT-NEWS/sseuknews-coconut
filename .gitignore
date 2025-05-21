@@ -55,4 +55,4 @@ terraform.rc
 
 ~/.aws
 
-mysql_data
+mysql_data/
