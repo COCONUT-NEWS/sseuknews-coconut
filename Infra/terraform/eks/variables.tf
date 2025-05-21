@@ -112,25 +112,3 @@ variable "subnet_ids" {
 variable "vpc_id" {
     type = string
 }
-
-<<<<<<< HEAD
-variable "sg" {
-    type = string
-}
-
-# variable "lunch_template" {
-#     type = string
-# }
-
-# variable "security_group" {
-#     type = string
-# }
-=======
-variable "lunch_template" {
-    type = string
-}
-
-variable "security_group" {
-    type = string
-}
->>>>>>> main
