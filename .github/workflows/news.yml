@@ -33,3 +33,11 @@ jobs:
       run: |
         export HARBOR_URL=${{ secrets.HARBOR_URL }}
         envsubst < manifests/news/news-deploy.yaml.template > manifests/news/news-deploy.yaml
+
+    - name: Set environment variables for News Crawler
+      run: |
+        echo "DB_HOST_NEWS=${{ secrets.DB_HOST }}" >> .env
+        echo "DB_USER_NEWS=${{ secrets.DB_USER }}" >> .env
+        echo "DB_PASSWORD_NEWS=${{ secrets.DB_PASSWORD }}" >> .env
+        echo "DB_NAME_NEWS=${{ secrets.DB_NAME_NEWS }}" >> .env
+

@@ -1,9 +1,13 @@
 # NewsAI/config.py
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
 DB_CONFIG = {
-    "host": "mysql_ai",
-    "user": "user",
-    "password": "test123",
-    "database": "coconut_ai",
+    "host": os.getenv("DB_HOST_AI"),
+    "user": os.getenv("DB_USER_AI"),
+    "password": os.getenv("DB_PASSWORD_AI"),
+    "database": os.getenv("DB_NAME_AI"),
     "charset": "utf8mb4"
 }
 

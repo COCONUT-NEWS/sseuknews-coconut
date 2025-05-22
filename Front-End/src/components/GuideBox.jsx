@@ -7,7 +7,8 @@ export default function GuideBox() {
             style={{
                 width: '100%',
                 maxWidth: '366px',
-                height: '146px',
+                // height: '146px',
+                height: '100px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
@@ -17,7 +18,7 @@ export default function GuideBox() {
                 marginBottom: '12px',
             }}
         >
-            <img
+            {/* <img
                 src={newspaperIcon}
                 alt="news icon"
                 style={{
@@ -26,12 +27,12 @@ export default function GuideBox() {
                     marginTop: '0px',
                     marginBottom: '16px',
                 }}
-            />
+            /> */}
 
             <p
                 style={{
                     fontFamily: 'Pretendard, sans-serif',
-                    fontSize: '18px',
+                    fontSize: '16px',
                     fontWeight: 500,
                     lineHeight: '140%',
                     color: '#535456',
