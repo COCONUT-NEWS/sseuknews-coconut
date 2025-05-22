@@ -10,7 +10,7 @@ export default function CategorySelector({ icon, label, onClick }) {
         alignItems: 'center',
         justifyContent: 'space-between', // 자식 두 개 사이에 공간을 줌
         padding: '0 24px',
-        height: '72px',
+        height: '68px',
         backgroundColor: '#FFFFFF',
         border: 'none',
         borderRadius: '16px',
@@ -26,11 +26,11 @@ export default function CategorySelector({ icon, label, onClick }) {
             <img
                 src={icon}
                 alt=""
-                style={{ width: '24px', height: '24px' }}
+                style={{ width: '22px', height: '22px' }}
             />
             <span
                 style={{
-                    fontSize: '18px',
+                    fontSize: '17px',
                     fontWeight: 600,
                     color: '#000000',
                 }}
