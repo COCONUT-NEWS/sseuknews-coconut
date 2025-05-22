@@ -25,7 +25,7 @@ export default function CategorySelectPage( { onSelectCategory }) {
                 style={{
                     display: 'flex',
                     alignItems: 'center', // 중앙 수직 정렬
-                    padding: '12px 0 0 20.5px', //위쪽 12px, 왼쪽 20.5px margin
+                    padding: '12px 0 0 10px', //위쪽 12px, 왼쪽 10px margin
                     height: '60px',
                 }}
             >
