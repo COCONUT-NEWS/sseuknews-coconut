@@ -20,22 +20,28 @@ export default function CategorySelectPage( { onSelectCategory }) {
     ];
 
     return (
-        <div style={{ paddingTop: '20px' }}>
+        <div style={{ paddingTop: '10px' }}>
             <header 
                 style={{
                     display: 'flex',
                     alignItems: 'center', // 중앙 수직 정렬
-                    padding: '60px 0 0 20.5px', //위쪽 60px, 왼쪽 20.5px margin
+                    padding: '12px 0 0 20.5px', //위쪽 12px, 왼쪽 20.5px margin
                     height: '60px',
                 }}
             >
                 <img
                     src={logo}
                     alt="쓱news 로고"
-                    style={{width: '84px', height: '36px', marginBottom: '20px'}}
+                    style={{width: '84px', height: '36px', marginBottom: '10px'}}
                 />
             </header>
-            <main style={{ padding: '1rem', disply: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <main style={{ 
+                // padding: '1rem', 
+                disply: 'flex', 
+                flexDirection: 'column', 
+                gap: '1.5rem' 
+                }}
+            >
                 <GuideBox />
                 {categories.map((category) => (
                     <CategoryButton
