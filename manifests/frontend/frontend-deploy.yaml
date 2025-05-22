@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend-controller
+        image: 18.181.174.61/sseuk/frontend:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
