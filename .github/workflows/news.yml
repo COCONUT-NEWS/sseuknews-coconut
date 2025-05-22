@@ -28,3 +28,8 @@ jobs:
     - name: Push Docker image
       run: |
         docker push ${{ secrets.HARBOR_URL }}/sseuk/news:latest
+    
+    - name: Replace HARBOR_URL in Deployment YAML
+      run: |
+        export HARBOR_URL=${{ secrets.HARBOR_URL }}
+        envsubst < manifests/news/news-deploy.yaml.template > manifests/news/news-deploy.yaml
