@@ -30,4 +30,12 @@ jobs:
       run: |
         docker push ${{ secrets.HARBOR_URL }}/sseuk/news-ai:latest
 
+    - name: Set environment variables for AI
+      run: |
+        echo "DB_HOST_AI=${{ secrets.DB_HOST }}" >> .env
+        echo "DB_USER_AI=${{ secrets.DB_USER }}" >> .env
+        echo "DB_PASSWORD_AI=${{ secrets.DB_PASSWORD }}" >> .env
+        echo "DB_NAME_AI=${{ secrets.DB_NAME_AI }}" >> .env
+
+
 
