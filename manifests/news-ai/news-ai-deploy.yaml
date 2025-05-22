@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: news-api
+  name: news-ai
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: news-api
+      app: news-ai
   template:
     metadata:
       labels:
-        app: news-api
+        app: news-ai
     spec:
       containers:
-      - name: news-api-controller
-        image: ${HARBOR_URL}/sseuk/news-api:latest
+      - name: news-ai-ctn
+        image: 18.181.174.61/sseuk/news-ai:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
