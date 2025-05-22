@@ -70,6 +70,9 @@ terraform.rc
 
 ~/.aws
 
-mysql_data/
+mysql_data_ai/
+mysql_data_api/
+mysql_data_news/
 
+secret.env
 .env

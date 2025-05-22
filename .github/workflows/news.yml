@@ -28,3 +28,11 @@ jobs:
     - name: Push Docker image
       run: |
         docker push ${{ secrets.HARBOR_URL }}/sseuk/news:latest
+
+    - name: Set environment variables for News Crawler
+      run: |
+        echo "DB_HOST_NEWS=${{ secrets.DB_HOST }}" >> .env
+        echo "DB_USER_NEWS=${{ secrets.DB_USER }}" >> .env
+        echo "DB_PASSWORD_NEWS=${{ secrets.DB_PASSWORD }}" >> .env
+        echo "DB_NAME_NEWS=${{ secrets.DB_NAME_NEWS }}" >> .env
+
