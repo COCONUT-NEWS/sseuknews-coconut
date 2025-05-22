@@ -29,6 +29,11 @@ jobs:
     - name: Push Docker image
       run: |
         docker push ${{ secrets.HARBOR_URL }}/sseuk/news-api:latest
+    
+    - name: Replace HARBOR_URL in Deployment YAML
+      run: |
+        export HARBOR_URL=${{ secrets.HARBOR_URL }}
+        envsubst < manifests/news-api/news-api-deploy.yaml.template > manifests/news-api/news-api-deploy.yaml
 
     - name: Set environment variables for API
       run: |
