@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useInsertionEffect, useState } from "react";
 import HeaderBar from "../components/HeaderBar";
 import politicsIcon from '../assets/politics.png';
 import economyIcon from '../assets/economy.png';
@@ -9,9 +9,9 @@ import worldIcon from '../assets/world.png';
 import CategoryHeader from "../components/CategoryHeader";
 import TrendNowTitle from "../components/TrendNowTitle";
 import KeywordSelector from "../components/KeywordSelector";
-import { categoryNewsData } from "../data/newsData";
 import NewsCard from "../components/NewsCard";
 
+import { getKeywords, getNewsList, getNewsListByKeyword } from "../api/mockApi";
 
 export default function NewsListPage({ category, onBack, onSelectNews }) {
     const categoryIcons = {
@@ -24,14 +24,64 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
     };
 
     const [selectedKeyword, setSelectedKeyword] = useState(null);
+    const [keywords, setKeywords] = useState([]);
+    const [newsList, setNewsList] = useState([]);
 
-    const currentKeyword = categoryNewsData[category].keywords;
-    const currentNews = categoryNewsData[category].news;
+    // 카테고리명 한글 -> API용 키로 변경
+    const convertCategoryToKey = (korean) => {
+      const map = {
+        정치: "politics",
+        경제: "economy",
+        사회: "society",
+        "생활/문화": "culture",
+        "IT/과학": "it",
+        세계: "world",
+      };
+      return map[korean];
+    };
 
-    const filteredNews = selectedKeyword
-      ? currentNews.filter((news) => news.title.includes(selectedKeyword))
-      : currentNews.slice(0, 20);
-      
+    // keyword API 호출
+    useEffect(() => {
+      const fetchKeywords = async () => {
+        const data = await getKeywords(convertCategoryToKey(category));
+        const keywordList = data.map((item) => item.keyword); // 키워드만 뽑기
+        setKeywords(keywordList);
+      };
+      fetchKeywords();
+    }, [category]);
+
+    // 뉴스 리스트 가져오기(keyword 선택 전, keyword 선택 후)
+    useEffect(() => {
+      const fetchNewsList = async () => {
+        const categoryKey = convertCategoryToKey(category);
+        let data;
+
+        if (selectedKeyword) {
+          // keyword 선택 후
+          data = await getNewsListByKeyword(categoryKey, selectedKeyword);
+        } else {
+          // keyword 선택 전
+          data = await getNewsList(categoryKey);
+        }
+
+        setNewsList(data);
+      };
+
+      fetchNewsList();
+    }, [category, selectedKeyword]);
+
+    // useEffect(() => {
+    //   const fetchNewsList = async () => {
+    //     const key = convertCategoryToKey(category);
+    //     const data = selectedKeyword
+    //       ? await getNewsListByKeyword(key, selectedKeyword)
+    //       : await getNewsList(key);
+    //     setNewsList(data);
+    //   };
+    //   fetchNewsList();
+    // }, [category, selectedKeyword]);
+    
+
   return (
     <div style={{ paddingTop: '20px' }}>
         <HeaderBar
@@ -43,7 +93,7 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
         <TrendNowTitle />
 
         <KeywordSelector
-          keywords={currentKeyword}
+          keywords={keywords}
           selectedKeyword={selectedKeyword}
           onSelect={(keyword) => {
             setSelectedKeyword((prev) =>
@@ -52,13 +102,13 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
           }}
         />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginTop: '16px', paddingBottom: '24px' }}>
-          {filteredNews.map((news) => (
+          {newsList.map((news) => (
             <NewsCard
               key={news.id}
               title={news.title}
-              content={news.content}
+              content={news.preview}
               keyword={selectedKeyword}
-              onClick={() => onSelectNews(news)}
+              onClick={() => onSelectNews(news.id)}
             />
           ))}
         </div>
