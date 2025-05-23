@@ -12,11 +12,11 @@ spec:
       labels:
         app: frontend
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
       - name: frontend-controller
         image: 18.181.174.61/sseuk/frontend:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
-      imagePullSecrets:
-        - name: regcred

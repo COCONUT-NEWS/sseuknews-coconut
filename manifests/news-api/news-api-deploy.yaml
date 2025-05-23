@@ -12,11 +12,11 @@ spec:
       labels:
         app: news-api
     spec:
+      imagePullSecrets:
+      - name: regcred
       containers:
       - name: news-api-controller
         image: 18.181.174.61/sseuk/news-api:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
-      imagePullSecrets:
-        - name: regcred
