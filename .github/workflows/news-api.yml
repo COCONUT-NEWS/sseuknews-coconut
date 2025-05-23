@@ -36,14 +36,6 @@ jobs:
         echo "DB_USER_API=${{ secrets.DB_USER }}" >> .env
         echo "DB_PASSWORD_API=${{ secrets.DB_PASSWORD }}" >> .env
         echo "DB_NAME_API=${{ secrets.DB_NAME_API }}" >> .env
-    
-    - name: Create regcred secret
-      run: |
-        kubectl create secret docker-registry regcred \
-          --docker-server=18.181.174.61 \
-          --docker-username=${{ secrets.HARBOR_USERNAME }} \
-          --docker-password=${{ secrets.HARBOR_PASSWORD }} \
-          --namespace=default || true
 
 
 
