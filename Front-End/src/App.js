@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import CategorySelectPage from './pages/CategorySelectPage';
 import NewsListPage from './pages/NewsListPage';
-import './App.css';
 import NewsDetailPage from './pages/NewsDetailPage';
+import './App.css';
+
 
 function App() {
   const PAGE = {
@@ -12,13 +13,17 @@ function App() {
   };
   const [page, setPage] = useState(PAGE.CATEGORY); // 'category', 'newsList', 'newsDetail'
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedNews, setSelectedNews] = useState(null);
+  const [selectedNewsId, setSelectedNewsId] = useState(null);
 
   const handleSelectCategory = (category) => {
     setSelectedCategory(category);
     setPage(PAGE.NEWS_LIST);
   };
 
+  const handleSelectedNews = (newsId) => {
+    setSelectedNewsId(newsId);
+    setPage(PAGE.NEWS_DETAIL);
+  };
 
   return (
     <div className='App'>
@@ -30,16 +35,13 @@ function App() {
         <NewsListPage 
           category={selectedCategory}
           onBack={() => setPage(PAGE.CATEGORY)}
-          onSelectNews={(news) => {
-            setSelectedNews(news);
-            setPage(PAGE.NEWS_DETAIL);
-          }}
+          onSelectNews={handleSelectedNews}
         />
       )}
 
-      {page === PAGE.NEWS_DETAIL && selectedNews && (
+      {page === PAGE.NEWS_DETAIL && selectedNewsId && (
         <NewsDetailPage
-          news={{ ...selectedNews, category: selectedCategory }}
+          newsId={selectedNewsId}
           onBack={() => setPage(PAGE.NEWS_LIST)}
         />
       )}
