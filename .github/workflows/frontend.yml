@@ -29,4 +29,3 @@ jobs:
     - name: Push Docker image
       run: |
         docker push ${{ secrets.HARBOR_URL }}/sseuk/frontend:latest
-
