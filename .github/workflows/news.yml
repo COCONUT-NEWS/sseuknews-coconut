@@ -1,9 +1,13 @@
-name: Build and Push News Crawler
+name: Build and Push News Crawler to ECR
 
 on:
   push:
     branches:
       - main
+
+permissions:
+  id-token: write       # OIDC 인증을 위한 권한
+  contents: read
 
 jobs:
   build-and-push:
@@ -13,21 +17,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Add Harbor CA cert (Self-signed)
-      run: |
-        sudo mkdir -p /etc/docker/certs.d/${{ secrets.HARBOR_URL }}
-        echo "${{ secrets.HARBOR_CA_B64 }}" | base64 -d | sudo tee /etc/docker/certs.d/${{ secrets.HARBOR_URL }}/ca.crt > /dev/null
+    - name: Configure AWS credentials (OIDC)
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        role-to-assume: arn:aws:iam::875522371656:role/GitHubOIDCRole
+        aws-region: ap-northeast-1
 
-    - name: Log in to Harbor
-      run: echo "${{ secrets.HARBOR_PASSWORD }}" | docker login ${{ secrets.HARBOR_URL }} -u ${{ secrets.HARBOR_USERNAME }} --password-stdin
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
 
     - name: Build Docker image
       run: |
-        docker build -t ${{ secrets.HARBOR_URL }}/sseuk/news:latest ./News
+        docker build -t ${{ steps.login-ecr.outputs.registry }}/sseuk:news ./News
 
-    - name: Push Docker image
+    - name: Push Docker image to ECR
       run: |
-        docker push ${{ secrets.HARBOR_URL }}/sseuk/news:latest
+        docker push ${{ steps.login-ecr.outputs.registry }}/sseuk:news
 
     - name: Set environment variables for News Crawler
       run: |
@@ -35,7 +41,9 @@ jobs:
         echo "DB_USER_NEWS=${{ secrets.DB_USER }}" >> .env
         echo "DB_PASSWORD_NEWS=${{ secrets.DB_PASSWORD }}" >> .env
         echo "DB_NAME_NEWS=${{ secrets.DB_NAME_NEWS }}" >> .env
-    
+
+
+
 
 
 
