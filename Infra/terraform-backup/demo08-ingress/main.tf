@@ -31,6 +31,7 @@ module "private_subnet" { #Private Subnet
   private_subnet-cidr = var.private_subnet-cidr[count.index]
   private_subnet-az   = count.index % 2 == 0 ? var.private_subnet-az[0] : var.private_subnet-az[1]
   private_subnet-name = var.private_subnet-name[count.index]
+  cluster-name 		= var.cluster-name
 }
 
 #Internet Gateway
@@ -366,25 +367,25 @@ module "ng-role"{
 }
 
 #launch template for node_group
-module "lt-ng"{
-  source 	= "./modules/t-aws-launch_template"
-  lt-sg 	= [module.sg-node_group.sg-id]
-  lt-key_name	= data.aws_key_pair.example.key_name
-  cluster-name 	= module.eks-cluster.cluster-name
-  aws_access_key_id = var.AWS_ACCESS_KEY
-  aws_access_key_secret = var.AWS_SECRET_KEY
-  region = var.AWS_REGION
-}
+# module "lt-ng"{
+#   source 	= "./modules/t-aws-launch_template"
+#   lt-sg 	= [module.sg-node_group.sg-id]
+#   lt-key_name	= data.aws_key_pair.example.key_name
+#   cluster-name 	= module.eks-cluster.cluster-name
+#   aws_access_key_id = var.AWS_ACCESS_KEY
+#   aws_access_key_secret = var.AWS_SECRET_KEY
+#   region = var.AWS_REGION
+# }
 
 module "node_group"{
   source 	   = "./modules/t-aws-eks/ng"
   for_each 	   = {for i, subnet in module.private_subnet: i => subnet}
-  cluster-name     = module.eks-cluster.cluster-name
+  cluster-name     = var.cluster-name
   ng-name 	   = "pracite-ng-${each.key}"
   ng-role_arn      = module.ng-role.arn
   subnet-id        =  [each.value["private_subnet-id"]]
   #key = data.aws_key_pair.example.key_name
-  ng-lt_id         = module.lt-ng.lt_id 
+  # ng-lt_id         = module.lt-ng.lt_id 
   instance_type = var.instance_type    
   depends_on       = [module.eks-cluster, module.ng-role]
 }
@@ -417,5 +418,22 @@ module "openid_connect_provider"{
   source ="./modules/t-aws-openid_connect_provider"
   client_id_list = ["sts.amazonaws.com"]
   url = module.eks-cluster.oidc_url
+  tumblist = module.eks-cluster.oidc_thumbprint
   depends_on = [module.eks-cluster]
+}
+
+module "karpenter"{
+  source ="./modules/t-helm-karpenter"
+  cluster_endpoint = module.eks-cluster.cluster-endpoint
+  eks_cluster_name = module.eks-cluster.cluster-name
+  depends_on = [ module.svc_karpenter, module.eks-cluster ]
+}
+
+module "svc_karpenter"{
+    source = "./modules/t-helm-svc_karpenter"
+    oidc_url = module.eks-cluster.oidc_url
+    oidc_url_without_https = module.eks-cluster.oidc_url_without_https
+    eks_oidc_provider = module.openid_connect_provider.eks_oidc_provider
+    eks_cluster_name = module.eks-cluster.cluster-name
+    depends_on = [ module.eks-cluster ]
 }

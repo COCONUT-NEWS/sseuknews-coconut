@@ -1,0 +1,18 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: example-provisioner
+spec:
+  requirements:
+    - key: "karpenter.sh/provisioner-name"
+      operator: In
+      values: ["example-provisioner"]
+  provider:
+    instanceType: m2.small
+    amiFamily: AmazonLinux2
+  taints:
+    - key: "karpenter.sh/unschedulable"
+      value: "true"
+      effect: NoSchedule
+  labels:
+    karpenter.sh/provisioner-name: "example-provisioner"

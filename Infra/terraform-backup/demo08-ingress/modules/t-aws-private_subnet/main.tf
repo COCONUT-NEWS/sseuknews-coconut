@@ -5,6 +5,7 @@ resource "aws_subnet" "private_subnets"{
   tags = {
     Name = var.private_subnet-name
     "kubernetes.io/role/internal-elb" = "1"
+    "karpenter.sh/discovery" = var.cluster-name
   }
 }
 

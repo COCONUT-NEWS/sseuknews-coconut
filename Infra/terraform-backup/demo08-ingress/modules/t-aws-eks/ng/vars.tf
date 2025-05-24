@@ -16,10 +16,7 @@ variable "subnet-id"{
   type = list(string)
 }
 
-variable "ng-lt_id"{
-  description = "id of launch template for node group"
-  type = string
-}
+
 variable "cluster_version" {
   type        = string
   default     = "1.25"

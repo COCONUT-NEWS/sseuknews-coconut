@@ -13,6 +13,11 @@ output "cluster-name" {
   value = var.cluster-name
 }
 
+output "cluster-endpoint" {
+  value = aws_eks_cluster.example.endpoint
+  
+}
+
 output "cluster-sg" {
   value = aws_eks_cluster.example.vpc_config[0].cluster_security_group_id
 }
@@ -27,5 +32,9 @@ output "oidc_url" {
 
 output "oidc_url_without_https" {
   value = replace(aws_eks_cluster.example.identity[0].oidc[0].issuer, "https://", "")
+}
+
+output "oidc_thumbprint" {
+  value = data.tls_certificate.oidc_cert.certificates[0].sha1_fingerprint
 }
 

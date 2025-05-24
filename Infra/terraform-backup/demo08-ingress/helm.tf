@@ -62,7 +62,7 @@ resource "helm_release" "alb-ingress-controller"{
 
 resource "helm_release" "cert-manager"{
   repository       = "https://charts.jetstack.io"
-  name             = "jetpack"
+  name             = "cert-manager"
   chart            = "cert-manager"
   #namespace        = data.kubernetes_namespace.cert_manager.metadata[0].name
   namespace        = "cert-manager" 
@@ -90,6 +90,5 @@ output "oidc_url_without_https" {
   value = module.eks-cluster.oidc_url_without_https
 }
 #oidc_url_without_https = "oidc.eks.ap-northeast-1.amazonaws.com/id/7F754942AF1A6F2F39B3DF446AB717FA"
-
 
 
