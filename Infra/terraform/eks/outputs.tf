@@ -1,5 +1,5 @@
 output "eks" {
-  value = aws_eks_cluster.this.arn
+  value = aws_eks_cluster.this
 }
 
 output "eks_name" {
@@ -14,3 +14,6 @@ output "eks_identity" {
   value = aws_eks_cluster.this.identity
 }
 
+output "node_iam_role_arn" {
+    value = aws_iam_role.node
+}

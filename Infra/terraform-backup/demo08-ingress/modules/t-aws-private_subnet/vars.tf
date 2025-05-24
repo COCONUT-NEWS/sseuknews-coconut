@@ -11,5 +11,9 @@ variable "private_subnet-az" {
 }
 
 variable "private_subnet-name" {
-  type =string
+  type = string
+}
+
+variable "cluster-name" {
+  type = string
 }

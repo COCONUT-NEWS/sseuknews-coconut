@@ -5,3 +5,7 @@ variable "client_id_list"{
 variable "url"{
   type = string
 }
+
+variable "tumblist" {
+  type = string
+}

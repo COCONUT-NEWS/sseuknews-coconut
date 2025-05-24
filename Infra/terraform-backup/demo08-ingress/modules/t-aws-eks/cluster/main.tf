@@ -11,6 +11,9 @@ resource "aws_eks_cluster" "example" {
   #   bootstrap_cluster_creator_admin_permissions = true
   # }
 }
+data "tls_certificate" "oidc_cert" {
+  url = "${aws_eks_cluster.example.identity[0].oidc[0].issuer}/keys"
+}
 
 # resource "terraform_data" "update_kubeconfig" {
 #   provisioner "local-exec" {
