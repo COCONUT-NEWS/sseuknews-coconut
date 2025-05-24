@@ -6,7 +6,7 @@ on:
       - main
 
 permissions:
-  id-token: write       # OIDC 인증을 위한 권한
+  id-token: write
   contents: read
 
 jobs:
@@ -27,6 +27,13 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
 
+    - name: Set environment variables for News Crawler
+      run: |
+        echo "DB_HOST_NEWS=${{ secrets.DB_HOST }}" >> ./News/.env
+        echo "DB_USER_NEWS=${{ secrets.DB_USER }}" >> ./News/.env
+        echo "DB_PASSWORD_NEWS=${{ secrets.DB_PASSWORD }}" >> ./News/.env
+        echo "DB_NAME_NEWS=${{ secrets.DB_NAME_NEWS }}" >> ./News/.env
+
     - name: Build Docker image
       run: |
         docker build -t ${{ steps.login-ecr.outputs.registry }}/sseuk:news ./News
@@ -34,17 +41,3 @@ jobs:
     - name: Push Docker image to ECR
       run: |
         docker push ${{ steps.login-ecr.outputs.registry }}/sseuk:news
-
-    - name: Set environment variables for News Crawler
-      run: |
-        echo "DB_HOST_NEWS=${{ secrets.DB_HOST }}" >> .env
-        echo "DB_USER_NEWS=${{ secrets.DB_USER }}" >> .env
-        echo "DB_PASSWORD_NEWS=${{ secrets.DB_PASSWORD }}" >> .env
-        echo "DB_NAME_NEWS=${{ secrets.DB_NAME_NEWS }}" >> .env
-
-
-
-
-
-
-
