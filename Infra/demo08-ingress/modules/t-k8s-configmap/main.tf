@@ -13,7 +13,7 @@ resource "kubernetes_config_map" "aws_auth" {
     - system:nodes
 EOF
     mapUsers = <<EOF
-- userarn: "arn:aws:iam::890924621133:user/eks-user" #일단 하드코딩
+- userarn: "arn:aws:iam::875522371656:user/eks-user" #일단 하드코딩
   username: "eks-user"
   groups:
     - system:masters

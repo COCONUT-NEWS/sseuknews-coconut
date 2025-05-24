@@ -41,3 +41,4 @@ jobs:
     - name: Push Docker image to ECR
       run: |
         docker push ${{ steps.login-ecr.outputs.registry }}/sseuk/news-api:latest
+        docker push ${{ steps.login-ecr.outputs.registry }}/sseuk:news-api

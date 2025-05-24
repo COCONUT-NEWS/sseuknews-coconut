@@ -12,10 +12,14 @@ spec:
       labels:
         app: news-ai
     spec:
+      serviceAccountName: news-ai-sa
       containers:
       - name: news-ai-ctn
         image: 875522371656.dkr.ecr.ap-northeast-1.amazonaws.com/sseuk:news-ai
         imagePullPolicy: Always
         ports:
         - containerPort: 80
+        env:
+        - name: AWS_REGION
+          value: "ap-northeast-1"
 
