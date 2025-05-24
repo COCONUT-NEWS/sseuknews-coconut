@@ -16,7 +16,7 @@ spec:
       - name: regcred
       containers:
       - name: frontend-controller
-        image: 18.181.174.61/sseuk/frontend:latest
+        image: 1875522371656.dkr.ecr.ap-northeast-1.amazonaws.com/sseuk:frontend
         imagePullPolicy: Always
         ports:
         - containerPort: 80
