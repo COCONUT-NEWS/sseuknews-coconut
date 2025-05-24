@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+print("✅ DEBUG: DB_HOST_API =", os.getenv("DB_HOST_API"))
+
 DB_CONFIG = {
     "host": os.getenv("DB_HOST_API"),
     "user": os.getenv("DB_USER_API"),
