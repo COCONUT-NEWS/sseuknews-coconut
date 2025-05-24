@@ -22,5 +22,8 @@ ENV DB_NAME_NEWS=$DB_NAME_NEWS
 WORKDIR /app
 COPY . /app/
 
+COPY .env /app/.env
+
+
 RUN pip install --no-cache-dir -r requirements.txt
 CMD ["python", "Crawling.py"]

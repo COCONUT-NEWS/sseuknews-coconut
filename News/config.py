@@ -1,6 +1,8 @@
 # News/config.py
 
 import os
+from dotenv import load_dotenv
+load_dotenv(dotenv_path="/app/.env")
 
 print("✅ DEBUG: DB_HOST_NEWS =", os.getenv("DB_HOST_NEWS"))
 
