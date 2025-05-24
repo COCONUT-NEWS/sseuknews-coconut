@@ -27,12 +27,15 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
 
-    - name: Set environment variables for News Crawler
+    - name: Build Docker image
       run: |
-        echo "DB_HOST_NEWS=${{ secrets.DB_HOST }}" >> ./News/.env
-        echo "DB_USER_NEWS=${{ secrets.DB_USER }}" >> ./News/.env
-        echo "DB_PASSWORD_NEWS=${{ secrets.DB_PASSWORD }}" >> ./News/.env
-        echo "DB_NAME_NEWS=${{ secrets.DB_NAME_NEWS }}" >> ./News/.env
+        docker build \
+          --build-arg DB_HOST_NEWS=${{ secrets.DB_HOST }} \
+          --build-arg DB_USER_NEWS=${{ secrets.DB_USER }} \
+          --build-arg DB_PASSWORD_NEWS=${{ secrets.DB_PASSWORD }} \
+          --build-arg DB_NAME_NEWS=${{ secrets.DB_NAME_NEWS }} \
+          -t ${{ steps.login-ecr.outputs.registry }}/sseuk:news ./News
+
 
     - name: Build Docker image
       run: |
