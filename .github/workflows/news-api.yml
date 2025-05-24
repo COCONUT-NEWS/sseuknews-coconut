@@ -29,11 +29,11 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ${{ steps.login-ecr.outputs.registry }}/sseuk/news-api:latest ./NewsAPI
+        docker build -t ${{ steps.login-ecr.outputs.registry }}/sseuk:news-api ./NewsAPI
 
     - name: Push Docker image to ECR
       run: |
-        docker push ${{ steps.login-ecr.outputs.registry }}/sseuk/news-api:latest
+        docker push ${{ steps.login-ecr.outputs.registry }}/sseuk:news-api
 
     - name: Set environment variables for News API
       run: |
