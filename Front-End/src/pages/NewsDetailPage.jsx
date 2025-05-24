@@ -49,12 +49,26 @@ export default function NewsDetailPage({ newsId, onBack }) {
                 fontSize: '24px',
                 fontWeight: 600,
                 lineHeight: '140%',
-                margin: '0 8px 20px',
+                margin: '0 8px 8px',
                 }}
             >
                 {news.title}
             </h1>
-
+            <div>
+                <p
+                    style={{
+                    margin: '0 8px 20px',
+                    color: '#535456',
+                    fontFamily: 'Pretendard, sans-serif',
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    lineHeight: '140%',
+                    }}
+                >
+                    {news.published_at} {news.source}
+                </p>
+            </div>
+            
             {/* 요약 버튼 */}
             <div style={{ marginBottom: '20px', display: 'flex', justifyContent: 'center'}}>
                 <SummaryButton onClick={() => setShowSummary(true)} />
@@ -72,6 +86,8 @@ export default function NewsDetailPage({ newsId, onBack }) {
                 }}
             >
                 {news.content}
+                <p> </p>
+                {news.reporter}
             </p>
 
             {/* 요약 카드 */}
