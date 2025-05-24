@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import magicIcon from '../assets/magic.png';
 
-export default function SummaryCard({ onClose }) {
+export default function SummaryCard({ onClose, summary }) {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -92,14 +92,7 @@ export default function SummaryCard({ onClose }) {
                             margin: 0,
                         }}
                     >
-                        여기는 요약된 내용이 들어갈 예정입니다.
-                        추후 Bedrock API를 통해 요약 내용을 넣을 예정입니다.
-                        여기는 요약된 내용이 들어갈 예정입니다.
-                        추후 Bedrock API를 통해 요약 내용을 넣을 예정입니다.
-                        여기는 요약된 내용이 들어갈 예정입니다.
-                        추후 Bedrock API를 통해 요약 내용을 넣을 예정입니다.
-                        여기는 요약된 내용이 들어갈 예정입니다.
-                        추후 Bedrock API를 통해 요약 내용을 넣을 예정입니다.
+                        {summary}
                     </p>
                 </div>
                 {/* 확인 버튼 */}
