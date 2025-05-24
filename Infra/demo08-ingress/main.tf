@@ -403,12 +403,15 @@ module "sa-alc"{
   source = "./modules/t-k8s-sa"
   sa-labels = {
     "app.kubernetes.io/component" = "controller"
-    "app.kubernetes.io/name" = "aws-load-balacner-controller"
+    "app.kubernetes.io/name" = "aws-load-balancer-controller"
+    "app.kubernetes.io/managed-by" = "Helm"
   }
   sa-name = "aws-load-balancer-controller"
   sa-namespace = "kube-system"
   sa-annotations = {
-    "eks.amazonaws.com/role-arn" = "arn:aws:iam::890924621133:role/alb-ingress-sa-role"
+    "eks.amazonaws.com/role-arn" = "arn:aws:iam::875522371656:role/alb-ingress-sa-role"
+    "meta.helm.sh/release-name"      = "aws-load-balancer-controller"
+    "meta.helm.sh/release-namespace" = "kube-system"
   }
 }
 
