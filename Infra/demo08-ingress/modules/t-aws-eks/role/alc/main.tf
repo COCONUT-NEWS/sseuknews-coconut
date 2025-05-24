@@ -45,7 +45,7 @@ resource "aws_iam_role" "alb_ingress_sa_role" {
         {
             "Effect": "Allow",
             "Principal": {
-                "Federated": "arn:aws:iam::890924621133:oidc-provider/${var.role-alc-oidc_without_https}"
+                "Federated": "arn:aws:iam::875522371656:oidc-provider/${var.role-alc-oidc_without_https}"
             },
             "Action": "sts:AssumeRoleWithWebIdentity",
             "Condition": {
