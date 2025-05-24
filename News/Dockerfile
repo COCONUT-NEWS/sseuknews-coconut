@@ -15,5 +15,6 @@ COPY . /app/
 COPY .env .env 
 
 RUN pip install --no-cache-dir -r requirements.txt
+RUN echo "✅ .env content:" && cat .env
 
 CMD ["python", "Crawling.py"]
