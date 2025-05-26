@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: news-ai
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: news-ai
@@ -13,6 +13,17 @@ spec:
         app: news-ai
     spec:
       serviceAccountName: news-ai-sa
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution: # 파드가 반드시 이 조건에 맞는 노드에 스케줄링되어야 합니다.
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: eks.amazonaws.com/nodegroup # EKS 관리형 노드 그룹의 기본 레이블 키입니다.
+                                                  # 실제 클러스터의 노드 레이블을 'kubectl get nodes --show-labels'로 확인하세요.
+                operator: In
+                values:
+                - pracite-ng-2
+                - pracite-ng-3
       containers:
       - name: news-ai-ctn
         image: 875522371656.dkr.ecr.ap-northeast-1.amazonaws.com/sseuk:news-ai
