@@ -33,9 +33,9 @@ spec:
             secretKeyRef:
               name: news-secrets
               key: DB_PASSWORD
-        - name: DB_NAME_NEWS
+        - name: coconut_news
           valueFrom:
             secretKeyRef:
               name: news-secrets
-              key: DB_NAME_NEWS
+              key: coconut_news
 
