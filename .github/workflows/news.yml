@@ -1,3 +1,5 @@
+# workflows/news.yml
+
 name: Build and Push News Crawler to ECR
 
 on:
@@ -26,13 +28,6 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
-
-    - name: Set environment variables for News Crawler
-      run: |
-        echo "DB_HOST_NEWS=${{ secrets.DB_HOST }}" >> ./News/.env
-        echo "DB_USER_NEWS=${{ secrets.DB_USER }}" >> ./News/.env
-        echo "DB_PASSWORD_NEWS=${{ secrets.DB_PASSWORD }}" >> ./News/.env
-        echo "DB_NAME_NEWS=${{ secrets.DB_NAME_NEWS }}" >> ./News/.env
 
     - name: Build Docker image
       run: |

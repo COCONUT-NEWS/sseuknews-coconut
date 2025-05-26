@@ -1,3 +1,5 @@
+# workflows/news-ai.yml
+
 name: Build and Push News AI to ECR
 
 on:
@@ -26,13 +28,6 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
-
-    - name: Generate .env for News AI
-      run: |
-        echo "DB_HOST_AI=${{ secrets.DB_HOST }}" >> ./NewsAI/.env
-        echo "DB_USER_AI=${{ secrets.DB_USER }}" >> ./NewsAI/.env
-        echo "DB_PASSWORD_AI=${{ secrets.DB_PASSWORD }}" >> ./NewsAI/.env
-        echo "DB_NAME_AI=${{ secrets.DB_NAME_AI }}" >> ./NewsAI/.env
 
     - name: Build Docker image
       run: |

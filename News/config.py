@@ -1,30 +1,30 @@
+# News/config.py
+
 import os
-from dotenv import load_dotenv
-load_dotenv()
 
 DB_CONFIG_AI = {
-    "host": os.getenv("DB_HOST_AI"),
+    "host": "coconut-db.clkkki229kj.ap-northeast-1.rds.amazonaws.com",
     "user": os.getenv("DB_USER_AI"),
     "password": os.getenv("DB_PASSWORD_AI"),
-    "database": os.getenv("DB_NAME_AI"),
+    "database": "coconut_api",
     "charset": "utf8mb4"
 }
-
+   
 DB_CONFIG_API = {
-    "host": os.getenv("DB_HOST_API"),
+    "host": "coconut-db.clkkki229kj.ap-northeast-1.rds.amazonaws.com",
     "user": os.getenv("DB_USER_API"),
     "password": os.getenv("DB_PASSWORD_API"),
-    "database": os.getenv("DB_NAME_API"),
+    "database": "coconut_ai",
     "charset": "utf8mb4"
 }
-
+   
 DB_CONFIG_NEWS = {
-    "host": os.getenv("DB_HOST_NEWS"),
+    "host": "coconut-db.clkkki229kj.ap-northeast-1.rds.amazonaws.com",
     "user": os.getenv("DB_USER_NEWS"),
     "password": os.getenv("DB_PASSWORD_NEWS"),
-    "database": os.getenv("DB_NAME_NEWS"),
+    "database": "coconut_news",
     "charset": "utf8mb4"
 }
 
-
 DB_CONFIGS = [DB_CONFIG_AI, DB_CONFIG_API, DB_CONFIG_NEWS]
+   

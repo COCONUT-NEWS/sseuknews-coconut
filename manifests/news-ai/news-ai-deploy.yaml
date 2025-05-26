@@ -1,3 +1,5 @@
+# manifests/news/news-ai-deploy.yaml
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -33,4 +35,21 @@ spec:
         env:
         - name: AWS_REGION
           value: "ap-northeast-1"
+        - name: DB_HOST_AI
+          value: coconut-db.clkkki229kj.ap-northeast-1.rds.amazonaws.com
+        - name: DB_USER_AI
+          valueFrom:
+            secretKeyRef:
+              name: news-secrets
+              key: DB_USER
+        - name: DB_PASSWORD_AI
+          valueFrom:
+            secretKeyRef:
+              name: news-secrets
+              key: DB_PASSWORD
+        - name: coconut_ai
+          valueFrom:
+            secretKeyRef:
+              name: news-secrets
+              key: coconut_ai
 

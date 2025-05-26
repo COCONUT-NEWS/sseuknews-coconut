@@ -1,3 +1,5 @@
+# workflows/news-api.yml
+
 name: Build and Push News API to ECR
 
 on:
@@ -26,13 +28,6 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
-
-    - name: Set environment variables for News API
-      run: |
-        echo "DB_HOST_API=${{ secrets.DB_HOST }}" >> ./NewsAPI/.env
-        echo "DB_USER_API=${{ secrets.DB_USER }}" >> ./NewsAPI/.env
-        echo "DB_PASSWORD_API=${{ secrets.DB_PASSWORD }}" >> ./NewsAPI/.env
-        echo "DB_NAME_API=${{ secrets.DB_NAME_API }}" >> ./NewsAPI/.env
 
     - name: Build Docker image (with latest tag)
       run: |
