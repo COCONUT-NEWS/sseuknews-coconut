@@ -32,7 +32,7 @@ spec:
         - containerPort: 80
         env:
         - name: DB_HOST_API
-          value: coconut-db.clkkki229kj.ap-northeast-1.rds.amazonaws.com
+          value: coconut-db.clkkkki229kj.ap-northeast-1.rds.amazonaws.com
         - name: DB_USER_API
           valueFrom:
             secretKeyRef:
