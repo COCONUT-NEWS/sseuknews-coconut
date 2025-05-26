@@ -1,30 +1,19 @@
 # News/config.py
-
 import os
 
-DB_CONFIG_AI = {
-    "host": "coconut-db.clkkkki229kj.ap-northeast-1.rds.amazonaws.com",
-    "user": os.getenv("DB_USER_AI"),
-    "password": os.getenv("DB_PASSWORD_AI"),
-    "database": os.getenv("DB_NAME_AI"),     
-    "charset": "utf8mb4"
-}
-   
-DB_CONFIG_API = {
-    "host": "coconut-db.clkkkki229kj.ap-northeast-1.rds.amazonaws.com",
-    "user": os.getenv("DB_USER_API"),
-    "password": os.getenv("DB_PASSWORD_API"),
-    "database": os.getenv("DB_NAME_API"),   
-    "charset": "utf8mb4"
-}
-   
-DB_CONFIG_NEWS = {
-    "host": "coconut-db.clkkkki229kj.ap-northeast-1.rds.amazonaws.com",
-    "user": os.getenv("DB_USER_NEWS"),
-    "password": os.getenv("DB_PASSWORD_NEWS"),
-    "database": os.getenv("DB_NAME_NEWS"), 
-    "charset": "utf8mb4"
-}
+def get_db_config(db_prefix):
+    return {
+        "host": os.getenv("DB_HOST_NEWS"),  # 공통 호스트라면 고정
+        "user": os.getenv(f"DB_USER_{db_prefix}"),
+        "password": os.getenv(f"DB_PASSWORD_{db_prefix}"),
+        "database": os.getenv(f"DB_NAME_{db_prefix}"),
+        "charset": "utf8mb4"
+    }
+
+DB_CONFIG_AI = get_db_config("AI")
+DB_CONFIG_API = get_db_config("API")
+DB_CONFIG_NEWS = get_db_config("NEWS")
+
 DB_CONFIGS = [DB_CONFIG_AI, DB_CONFIG_API, DB_CONFIG_NEWS]
 
 import os
