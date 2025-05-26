@@ -48,3 +48,36 @@ spec:
             secretKeyRef:
               name: news-secrets
               key: DB_NAME_NEWS
+
+        - name: DB_USER_API
+          valueFrom:
+            secretKeyRef:
+              name: news-secrets
+              key: DB_USER
+        - name: DB_PASSWORD_API
+          valueFrom:
+            secretKeyRef:
+              name: news-secrets
+              key: DB_PASSWORD
+        - name: DB_NAME_API
+          valueFrom:
+            secretKeyRef:
+              name: news-secrets
+              key: DB_NAME_API
+
+        - name: DB_USER_AI
+          valueFrom:
+            secretKeyRef:
+              name: news-secrets
+              key: DB_USER
+        - name: DB_PASSWORD_AI
+          valueFrom:
+            secretKeyRef:
+              name: news-secrets
+              key: DB_PASSWORD
+        - name: DB_NAME_AI
+          valueFrom:
+            secretKeyRef:
+              name: news-secrets
+              key: DB_NAME_AI
+
