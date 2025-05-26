@@ -27,4 +27,8 @@ DB_CONFIG_NEWS = {
 }
 
 DB_CONFIGS = [DB_CONFIG_AI, DB_CONFIG_API, DB_CONFIG_NEWS]
-   
+
+import os
+
+print("🔍 DB_USER_API =", os.getenv("DB_USER_API"))
+print("🔍 DB_PASSWORD_API =", os.getenv("DB_PASSWORD_API"))
