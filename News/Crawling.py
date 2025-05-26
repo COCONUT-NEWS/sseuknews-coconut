@@ -7,6 +7,7 @@ import pymysql
 from collections import Counter
 from konlpy.tag import Okt
 from config import DB_CONFIG_API, DB_CONFIGS
+import os
 
 import socket  # 추가
 
@@ -15,7 +16,7 @@ try:
     print("✅ RDS 주소 해석 결과:", resolved_ip)
 except socket.gaierror as e:
     print("❌ RDS DNS 해석 실패:", e)
-    
+
 yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%Y%m%d')
 
 categories = {
