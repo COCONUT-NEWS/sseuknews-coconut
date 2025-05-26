@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-applications # 또는 app-of-apps
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/COCONUT-NEWS/sseuknews-coconut.git' # 현재 GitOps 저장소
+    path: 'GitOpsCRD/applications'  # Application CRD들이 모여있는 디렉토리
+    targetRevision: HEAD
+    # directory: # 만약 path 하위에 여러 Application YAML이 있다면 directory recurse 사용 가능
+    #   recurse: true
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: argocd # Application CRD들은 argocd 네임스페이스에 생성
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: news-ai-service
+spec:
+  selector:
+    app: news-ai
+  ports:
+    - port: 8080
+      targetPort: 80
+  
