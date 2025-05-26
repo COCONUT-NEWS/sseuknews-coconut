@@ -46,20 +46,10 @@ spec:
               key: DB_PASSWORD
 
         - name: DB_NAME_NEWS
-          valueFrom:
-            secretKeyRef:
-              name: news-secrets
-              key: DB_NAME_NEWS
+          value: coconut_news
 
         - name: DB_NAME_API
-          valueFrom:
-            secretKeyRef:
-              name: news-secrets
-              key: DB_NAME_API
+          value: coconut_api
 
         - name: DB_NAME_AI
-          valueFrom:
-            secretKeyRef:
-              name: news-secrets
-              key: DB_NAME_AI
-
+          value: coconut_ai
