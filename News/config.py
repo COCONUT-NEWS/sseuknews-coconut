@@ -3,7 +3,7 @@
 import os
 
 DB_CONFIG_AI = {
-    "host": "coconut-db.clkkki229kj.ap-northeast-1.rds.amazonaws.com",
+    "host": "coconut-db.clkkkki229kj.ap-northeast-1.rds.amazonaws.com",
     "user": os.getenv("DB_USER_AI"),
     "password": os.getenv("DB_PASSWORD_AI"),
     "database": "coconut_api",
@@ -11,7 +11,7 @@ DB_CONFIG_AI = {
 }
    
 DB_CONFIG_API = {
-    "host": "coconut-db.clkkki229kj.ap-northeast-1.rds.amazonaws.com",
+    "host": "coconut-db.clkkkki229kj.ap-northeast-1.rds.amazonaws.com",
     "user": os.getenv("DB_USER_API"),
     "password": os.getenv("DB_PASSWORD_API"),
     "database": "coconut_ai",
@@ -19,7 +19,7 @@ DB_CONFIG_API = {
 }
    
 DB_CONFIG_NEWS = {
-    "host": "coconut-db.clkkki229kj.ap-northeast-1.rds.amazonaws.com",
+    "host": "coconut-db.clkkkki229kj.ap-northeast-1.rds.amazonaws.com",
     "user": os.getenv("DB_USER_NEWS"),
     "password": os.getenv("DB_PASSWORD_NEWS"),
     "database": "coconut_news",
