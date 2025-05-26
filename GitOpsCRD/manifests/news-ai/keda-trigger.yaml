@@ -1,11 +1,11 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: my-application-scaler
-  namespace: my-application-namespace # 애플리케이션이 배포된 네임스페이스
+  name: news-ai-scaler
+  namespace: default # 애플리케이션이 배포된 네임스페이스
 spec:
   scaleTargetRef:
-    name: my-application-deployment # 확장할 Deployment의 이름
+    name: news-ai # 확장할 Deployment의 이름
   pollingInterval: 30  # Optional: KEDA가 메트릭을 폴링하는 간격 (초)
   cooldownPeriod:  300 # Optional: 마지막 트리거 후 스케일 다운까지 대기 시간 (초)
   minReplicaCount: 0   # 중요: 평소에는 0개로 스케일 다운 가능하도록 설정
@@ -15,19 +15,8 @@ spec:
   - type: cron
     metadata:
       timezone: "Asia/Seoul"       # 한국 시간대
-      start: "30 23 * * *"           # 매일 오전 6시 00분에 시작
-      end: "59 23 * * *"             # 매일 오전 6시 05분에 종료 (5분 동안만 활성)
-      desiredReplicas: "1"         # 이 시간 동안 최소 1개의 복제본을 원함
+      start: "45 23 * * *"           # 매일 오전 6시 00분에 시작
+      end: "55 23 * * *"             # 매일 오전 6시 05분에 종료 (5분 동안만 활성)
+      desiredReplicas: "2"         # 이 시간 동안 최소 2개의 복제본을 원함
 
-  # 2 SQS 큐 기반 트리거
-  - type: aws-sqs-queue
-    metadata:
-      queueURL: "https://sqs.<YOUR_REGION>.amazonaws.com/<YOUR_AWS_ACCOUNT_ID>/<YOUR_QUEUE_NAME>"
-      queueLength: "5" # 대기열의 메시지 5개당 포드 1개 확장
-      awsRegion: "<YOUR_REGION>"
-      # KEDA 운영자가 SQS에 접근할 권한이 있다면 'operator'로 설정합니다.
-      # 애플리케이션 포드에 IRSA를 설정했고, KEDA가 포드의 IAM 역할을 사용하게 하려면
-      # 'pod'로 설정하거나 생략합니다(KEDA 2.0+ 기본값).
-      # 애플리케이션 로직 자체가 SQS에 접근할 필요가 없다면, KEDA operator에만 권한을 주고
-      # 'operator'로 설정하는 것이 관리상 더 간단할 수 있습니다.
-      identityOwner: operator # 예시: KEDA Operator가 IAM 역할 사용
+  
