@@ -1,4 +1,5 @@
 # News/config.py
+
 import os
 
 DB_CONFIG_AI = {
