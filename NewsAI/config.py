@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DB_CONFIG = {
-    "host": "coconut-db.clkkki229kj.ap-northeast-1.rds.amazonaws.com",
+    "host": "coconut-db.clkkkki229kj.ap-northeast-1.rds.amazonaws.com",
     "user": os.getenv("DB_USER_AI"),
     "password": os.getenv("DB_PASSWORD_AI"),
     "database": os.getenv("DB_NAME_AI"),
