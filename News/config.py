@@ -17,3 +17,6 @@ DB_CONFIG_NEWS = get_db_config("NEWS")
 DB_CONFIGS = [DB_CONFIG_AI, DB_CONFIG_API, DB_CONFIG_NEWS]
 
 print("🔍 DB_NAME_API =", os.getenv("DB_NAME_API"))
+
+for var in ["DB_NAME_API", "DB_NAME_AI", "DB_NAME_NEWS"]:
+    print(f"🔍 {var} =", os.getenv(var))
