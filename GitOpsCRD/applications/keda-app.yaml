@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: keda
+  name: keda-app
   namespace: argocd # ArgoCD가 설치된 네임스페이스
   # KEDA 자체를 클러스터 전체의 중요한 컴포넌트로 간주하여 삭제 방지 finalizer 추가 가능
   # finalizers:

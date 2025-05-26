@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: root-applications # 또는 app-of-apps
+  name: root-app # 또는 app-of-apps
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
