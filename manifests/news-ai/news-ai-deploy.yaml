@@ -17,11 +17,10 @@ spec:
       serviceAccountName: news-ai-sa
       affinity:
         nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution: # 파드가 반드시 이 조건에 맞는 노드에 스케줄링되어야 합니다.
+          requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: eks.amazonaws.com/nodegroup # EKS 관리형 노드 그룹의 기본 레이블 키입니다.
-                                                  # 실제 클러스터의 노드 레이블을 'kubectl get nodes --show-labels'로 확인하세요.
+              - key: eks.amazonaws.com/nodegroup
                 operator: In
                 values:
                 - pracite-ng-2
@@ -47,9 +46,8 @@ spec:
             secretKeyRef:
               name: news-secrets
               key: DB_PASSWORD
-        - name: coconut_ai
+        - name: DB_NAME_AI
           valueFrom:
             secretKeyRef:
               name: news-secrets
-              key: coconut_ai
-
+              key: DB_NAME_AI
