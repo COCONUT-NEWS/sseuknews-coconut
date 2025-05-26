@@ -10,7 +10,7 @@ spec:
   project: default # 또는 사용하는 ArgoCD 프로젝트 이름
   source:
     repoURL: 'https://github.com/COCONUT-NEWS/sseuknews-coconut.git' # Deployment 매니페스트가 있는 Git 리포지토리 주소
-    path: 'GitOpsCRDmanifests/news-api' # Git 리포지토리 내의 news Deployment 매니페스트 경로
+    path: 'GitOpsCRD/manifests/news-api' # Git 리포지토리 내의 news Deployment 매니페스트 경로
     targetRevision: HEAD
   destination:
     server: 'https://kubernetes.default.svc' # 대상 클러스터
