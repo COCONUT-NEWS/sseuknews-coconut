@@ -11,8 +11,7 @@ import TrendNowTitle from "../components/TrendNowTitle";
 import KeywordSelector from "../components/KeywordSelector";
 import NewsCard from "../components/NewsCard";
 
-// import { getKeywords, getNewsList, getNewsListByKeyword } from "../api/mockApi";
-import { fetchKeywords } from "../api/api.js";
+import { fetchKeywords, fetchNewsListByKeyword } from "../api/api.js";
 
 export default function NewsListPage({ category, onBack, onSelectNews }) {
     const categoryIcons = {
@@ -60,10 +59,10 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
 
         if (selectedKeyword) {
           // keyword 선택 후
-          data = await getNewsListByKeyword(categoryKey, selectedKeyword);
+          data = await fetchNewsListByKeyword(categoryKey, selectedKeyword);
         } else {
           // keyword 선택 전
-          data = await getNewsList(categoryKey);
+          data = await fetchNewsList(categoryKey);
         }
 
         setNewsList(data);
