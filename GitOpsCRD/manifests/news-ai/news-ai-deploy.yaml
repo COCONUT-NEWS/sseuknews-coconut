@@ -5,7 +5,7 @@ kind: Deployment
 metadata:
   name: news-ai
 spec:
-  replicas: 0
+  replicas: 2
   selector:
     matchLabels:
       app: news-ai
