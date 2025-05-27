@@ -7,6 +7,10 @@ from config import DB_CONFIG
 
 app = Flask(__name__)
 
+@app.route("/healthz", methods=["GET"])
+def health_check():
+    return jsonify({"status": "ok"}), 200
+
 ##################################
 ######## 카테고리별 키워드 조회 ########
 ##################################

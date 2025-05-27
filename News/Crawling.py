@@ -9,13 +9,7 @@ from konlpy.tag import Okt
 from config import DB_CONFIG_API, DB_CONFIGS
 import os
 
-import socket  # 추가
-
-try:
-    resolved_ip = socket.gethostbyname(os.getenv("DB_HOST_NEWS"))
-    print("✅ RDS 주소 해석 결과:", resolved_ip)
-except socket.gaierror as e:
-    print("❌ RDS DNS 해석 실패:", e)
+import socket  
 
 yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%Y%m%d')
 
@@ -31,11 +25,11 @@ categories = {
 headers = {"User-Agent": "Mozilla/5.0"}
 all_news = []
 
-# 🔍 뉴스 수집
+# 뉴스 수집
 for name, sid in categories.items():
     print(f"카테고리: {name}")
     page, count = 1, 0
-    while count < 10:
+    while count < 100:
         url = f"https://news.naver.com/main/list.naver?mode=LSD&mid=shm&sid1={sid}&date={yesterday}&page={page}"
         try:
             res = requests.get(url, headers=headers)
@@ -50,7 +44,7 @@ for name, sid in categories.items():
             break
 
         for tag in items:
-            if count >= 10:
+            if count >= 100:
                 break
             try:
                 news_url = tag["href"]
@@ -82,7 +76,7 @@ for name, sid in categories.items():
                 continue
         page += 1
 
-print(f"\n🧾 전체 수집 완료: {len(all_news)}개 뉴스 수집됨.")
+print(f"\n 전체 수집 완료: {len(all_news)}개 뉴스 수집됨.")
 
 def save_news_to_mysql(news_data):
     for DB_CONFIG in DB_CONFIGS:
@@ -133,13 +127,13 @@ def save_news_to_mysql(news_data):
             print(f"🗃️ [{DB_CONFIG['database']}] 뉴스 저장 완료: {len(news_data)}건")
 
         except Exception as e:
-            print(f"❌ [{DB_CONFIG['database']}] 뉴스 저장 실패: {e}")
+            print(f"[{DB_CONFIG['database']}] 뉴스 저장 실패: {e}")
         finally:
             if cursor: cursor.close()
             if conn: conn.close()
 
 
-# ✅ 키워드 추출
+# 키워드 추출
 def extract_top_keywords(news_data, top_n=6):
     okt = Okt()
     category_contents = {}
@@ -153,7 +147,7 @@ def extract_top_keywords(news_data, top_n=6):
         category_keywords[category] = counter.most_common(top_n)
     return category_keywords
 
-# ✅ 키워드 저장
+# 키워드 저장
 def save_top_keywords_to_mysql(top_keywords):
     conn = pymysql.connect(**DB_CONFIG_API)
     cursor = conn.cursor()
@@ -166,7 +160,7 @@ def save_top_keywords_to_mysql(top_keywords):
     conn.close()
     print(f"🗂️ 키워드 저장 완료: {sum(len(v) for v in top_keywords.values())}건")
 
-# ✅ 키워드-뉴스 매핑 저장
+# 키워드-뉴스 매핑 저장
 def save_keyword_news_mapping(top_keywords):
     conn = pymysql.connect(**DB_CONFIG_API)
     cursor = conn.cursor()
@@ -184,7 +178,7 @@ def save_keyword_news_mapping(top_keywords):
     conn.close()
     print(f"🔗 키워드-뉴스 연결 완료")
 
-# ✅ 실행 순서
+# 실행 순서
 save_news_to_mysql(all_news)
 top_keywords = extract_top_keywords(all_news)
 save_top_keywords_to_mysql(top_keywords)
