@@ -12,7 +12,7 @@ import KeywordSelector from "../components/KeywordSelector";
 import NewsCard from "../components/NewsCard";
 
 // import { getKeywords, getNewsList, getNewsListByKeyword } from "../api/mockApi";
-import { fetchKeywords } from "../api/realApi";
+import { fetchKeywords } from "../api/api.js";
 
 export default function NewsListPage({ category, onBack, onSelectNews }) {
     const categoryIcons = {
@@ -44,8 +44,8 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
     // keyword API 호출
     useEffect(() => {
       const loadKeywords = async () => {
-        const categoryName = convertCategoryToKey(category);
-        const data = await fetchKeywords(categoryName);
+        const categoryKey = convertCategoryToKey(category);
+        const data = await fetchKeywords(categoryKey);
         const keywordList = data.map(item => item.keyword);
         setKeywords(keywordList);
       };
