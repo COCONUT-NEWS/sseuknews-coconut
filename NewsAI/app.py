@@ -8,10 +8,10 @@ from config import AWS_REGION, AWS_PROFILE, DB_CONFIG
 
 app = Flask(__name__)
 
-@app.route("/healthz", methods=["GET"])
+@app.route("/", methods=["GET"])
 def health_check():
     return jsonify({"status": "ok"}), 200
-    
+
 # GET 요청 + URL 경로에서 뉴스 ID 받기
 @app.route("/api/v1/summarize/<int:news_id>", methods=["GET"])
 def summarize_news(news_id):
