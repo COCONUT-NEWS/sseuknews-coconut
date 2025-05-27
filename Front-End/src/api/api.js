@@ -45,3 +45,14 @@ export const fetchNewsListByKeyword = async (categoryKey, keyword) => {
         return [];
     }
 };
+
+// 뉴스 상세 조회
+export const fetchNewsDetail = async (newsId) => {
+    try {
+        const response = await instance.get(`/api/v1/news/${newsId}`);
+        return response.data?.data || null;
+    } catch (error) {
+        console.error('fail to fetch news detail: ', error);
+        return null;
+    };
+}

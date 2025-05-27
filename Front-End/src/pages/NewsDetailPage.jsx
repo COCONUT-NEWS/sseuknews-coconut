@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { getNewsDetail, getSummary } from "../api/mockApi";
+// import { getNewsDetail, getSummary } from "../api/mockApi";
+import { fetchNewsDetail } from "../api/api";
 import HeaderBar from "../components/HeaderBar";
 import SummaryButton from '../components/SummaryButton';
 import SummaryCard from '../components/SummaryCard';
@@ -10,13 +11,13 @@ export default function NewsDetailPage({ newsId, onBack }) {
     const [summaryText, setSummaryText] = useState('');
 
     useEffect(() => {
-        const fetchNewsDetail = async () => {
+        const fetchDetail = async () => {
             console.log("요청받은 newsId:", newsId);
-            const data = await getNewsDetail(newsId);
+            const data = await fetchNewsDetail(newsId);
             console.log("news detail data: ", data);
             setNews(data);
         };
-        fetchNewsDetail();
+        fetchDetail();
     }, [newsId]);
 
     useEffect(() => {
