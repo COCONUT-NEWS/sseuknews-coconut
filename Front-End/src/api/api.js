@@ -56,3 +56,14 @@ export const fetchNewsDetail = async (newsId) => {
         return null;
     };
 }
+
+// AI 요약 조회
+export const fetchSummary = async (newsId) => {
+    try {
+        const response = await instance.get(`/api/v1/summarize/${newsId}`);
+        return response.data?.summary || null;
+    } catch (error) {
+        console.error('fail to fetch news summary: ', error);
+        return null;
+    };
+}

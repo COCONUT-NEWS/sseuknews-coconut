@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import magicIcon from '../assets/magic.png';
 
-export default function SummaryCard({ onClose, summary }) {
+export default function SummaryCard({ summary, onClose }) {
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -92,7 +92,7 @@ export default function SummaryCard({ onClose, summary }) {
                             margin: 0,
                         }}
                     >
-                        {summary}
+                        {summary || '요약 내용을 불러오지 못했습니다.'}
                     </p>
                 </div>
                 {/* 확인 버튼 */}

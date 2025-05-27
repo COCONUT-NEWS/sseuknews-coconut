@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { getNewsDetail, getSummary } from "../api/mockApi";
-import { fetchNewsDetail } from "../api/api";
+import { fetchNewsDetail, fetchSummary } from "../api/api";
 import HeaderBar from "../components/HeaderBar";
 import SummaryButton from '../components/SummaryButton';
 import SummaryCard from '../components/SummaryCard';
@@ -22,12 +21,12 @@ export default function NewsDetailPage({ newsId, onBack }) {
 
     useEffect(() => {
         if (showSummary) {
-            const fetchSummary = async () => {
-                const text = await getSummary(newsId);
+            const fetchNewsSummary = async () => {
+                const text = await fetchSummary(newsId);
                 console.log("요약 내용:", text);
                 setSummaryText(text);
             };
-            fetchSummary();
+            fetchNewsSummary();
         }
     }, [showSummary, newsId]);
 
@@ -92,7 +91,12 @@ export default function NewsDetailPage({ newsId, onBack }) {
             </p>
 
             {/* 요약 카드 */}
-            {showSummary && <SummaryCard onClose={() => setShowSummary(false)} summary={summaryText}/>}
+            {showSummary && (
+                <SummaryCard 
+                    summary={summaryText}
+                    onClose={() => setShowSummary(false)} 
+                />
+            )}
         </div>
     );
 }
