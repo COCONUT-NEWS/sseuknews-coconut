@@ -11,7 +11,8 @@ import TrendNowTitle from "../components/TrendNowTitle";
 import KeywordSelector from "../components/KeywordSelector";
 import NewsCard from "../components/NewsCard";
 
-import { getKeywords, getNewsList, getNewsListByKeyword } from "../api/mockApi";
+// import { getKeywords, getNewsList, getNewsListByKeyword } from "../api/mockApi";
+import { fetchKeywords } from "../api/api.js";
 
 export default function NewsListPage({ category, onBack, onSelectNews }) {
     const categoryIcons = {
@@ -42,12 +43,13 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
 
     // keyword API 호출
     useEffect(() => {
-      const fetchKeywords = async () => {
-        const data = await getKeywords(convertCategoryToKey(category));
-        const keywordList = data.map((item) => item.keyword); // 키워드만 뽑기
+      const loadKeywords = async () => {
+        const categoryKey = convertCategoryToKey(category);
+        const data = await fetchKeywords(categoryKey);
+        const keywordList = data.map(item => item.keyword);
         setKeywords(keywordList);
       };
-      fetchKeywords();
+      loadKeywords();
     }, [category]);
 
     // 뉴스 리스트 가져오기(keyword 선택 전, keyword 선택 후)
@@ -69,18 +71,6 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
 
       fetchNewsList();
     }, [category, selectedKeyword]);
-
-    // useEffect(() => {
-    //   const fetchNewsList = async () => {
-    //     const key = convertCategoryToKey(category);
-    //     const data = selectedKeyword
-    //       ? await getNewsListByKeyword(key, selectedKeyword)
-    //       : await getNewsList(key);
-    //     setNewsList(data);
-    //   };
-    //   fetchNewsList();
-    // }, [category, selectedKeyword]);
-    
 
   return (
     <div style={{ paddingTop: '20px' }}>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getNewsDetail, getSummary } from "../api/mockApi";
+import { fetchNewsDetail, fetchSummary } from "../api/api";
 import HeaderBar from "../components/HeaderBar";
 import SummaryButton from '../components/SummaryButton';
 import SummaryCard from '../components/SummaryCard';
@@ -10,23 +10,23 @@ export default function NewsDetailPage({ newsId, onBack }) {
     const [summaryText, setSummaryText] = useState('');
 
     useEffect(() => {
-        const fetchNewsDetail = async () => {
+        const fetchDetail = async () => {
             console.log("요청받은 newsId:", newsId);
-            const data = await getNewsDetail(newsId);
+            const data = await fetchNewsDetail(newsId);
             console.log("news detail data: ", data);
             setNews(data);
         };
-        fetchNewsDetail();
+        fetchDetail();
     }, [newsId]);
 
     useEffect(() => {
         if (showSummary) {
-            const fetchSummary = async () => {
-                const text = await getSummary(newsId);
+            const fetchNewsSummary = async () => {
+                const text = await fetchSummary(newsId);
                 console.log("요약 내용:", text);
                 setSummaryText(text);
             };
-            fetchSummary();
+            fetchNewsSummary();
         }
     }, [showSummary, newsId]);
 
@@ -91,7 +91,12 @@ export default function NewsDetailPage({ newsId, onBack }) {
             </p>
 
             {/* 요약 카드 */}
-            {showSummary && <SummaryCard onClose={() => setShowSummary(false)} summary={summaryText}/>}
+            {showSummary && (
+                <SummaryCard 
+                    summary={summaryText}
+                    onClose={() => setShowSummary(false)} 
+                />
+            )}
         </div>
     );
 }
