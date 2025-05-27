@@ -6,6 +6,6 @@ spec:
   selector:
     app: news-ai
   ports:
-    - port: 8080
-      targetPort: 80
+    - port: 8008
+      targetPort: 8008
   
