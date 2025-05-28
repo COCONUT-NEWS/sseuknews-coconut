@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: `http://www.kimsimu.com`,
+    baseURL: `https://www.kimsimu.com`,
 });
 
 // 키워드 조회
