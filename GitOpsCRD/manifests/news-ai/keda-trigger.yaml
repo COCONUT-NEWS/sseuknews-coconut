@@ -1,7 +1,8 @@
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
-  name: news-scaler
+  name: news-ai-scaler
+
   namespace: default # 애플리케이션이 배포된 네임스페이스
 spec:
   scaleTargetRef:
@@ -15,8 +16,8 @@ spec:
   - type: cron
     metadata:
       timezone: "Asia/Seoul"       # 한국 시간대
-      start: "00 18 * * *"           # 매일 오전 6시 00분에 시작
-      end: "10 18 * * *"             # 매일 오전 6시 30분에 종료 (30분 동안만 활성)
+      start: "10 18 * * *"           # 매일 오전 6시 00분에 시작
+      end: "20 18 * * *"             # 매일 오전 6시 30분에 종료 (30분 동안만 활성)
       desiredReplicas: "4"         # 이 시간 동안 최소 2개의 복제본을 원함
 
   
