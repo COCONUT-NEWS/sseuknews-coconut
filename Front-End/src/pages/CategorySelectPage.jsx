@@ -6,7 +6,7 @@ import politicsIcon from '../assets/politics.png';
 import economyIcon from '../assets/economy.png';
 import societyIcon from '../assets/society.png';
 import lifeIcon from '../assets/life.png';
-import itIcon from '../assets/it.png';
+import technologyIcon from '../assets/technology.png';
 import worldIcon from '../assets/world.png';
 
 export default function CategorySelectPage( { onSelectCategory }) {
@@ -15,7 +15,7 @@ export default function CategorySelectPage( { onSelectCategory }) {
         { label: '경제', icon: economyIcon }, 
         { label: '사회', icon: societyIcon }, 
         { label: '생활/문화', icon: lifeIcon }, 
-        { label: 'IT/과학', icon: itIcon }, 
+        { label: 'IT/과학', icon: technologyIcon }, 
         { label: '세계', icon: worldIcon }, 
     ];
 

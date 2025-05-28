@@ -4,7 +4,7 @@ import politicsIcon from '../assets/politics.png';
 import economyIcon from '../assets/economy.png';
 import societyIcon from '../assets/society.png';
 import lifeIcon from '../assets/life.png';
-import itIcon from '../assets/it.png';
+import technologyIcon from '../assets/technology.png';
 import worldIcon from '../assets/world.png';
 import CategoryHeader from "../components/CategoryHeader";
 import TrendNowTitle from "../components/TrendNowTitle";
@@ -19,7 +19,7 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
         경제: economyIcon,
         사회: societyIcon,
         '생활/문화': lifeIcon,
-        'IT/과학': itIcon,
+        'IT/과학': technologyIcon,
         세계: worldIcon,
     };
 
@@ -34,7 +34,7 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
         경제: "economy",
         사회: "society",
         "생활/문화": "culture",
-        "IT/과학": "it",
+        "IT/과학": "technology",
         세계: "world",
       };
       return map[korean];
