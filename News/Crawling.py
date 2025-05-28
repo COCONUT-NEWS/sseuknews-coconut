@@ -114,7 +114,7 @@ def save_news_to_mysql(news_data):
                 );
             """)
 
-            # 이전 데이터 초기화화
+            # 이전 데이터 초기화
             print(f"[{DB_CONFIG['database']}] 기존 뉴스 데이터 초기화")
             cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
             cursor.execute("TRUNCATE TABLE keyword_news_map")
@@ -144,7 +144,7 @@ def extract_top_keywords(news_data, top_n=6):
     category_contents = {}
     for category, title, url, content, *_ in news_data:
         category_contents.setdefault(category, "")
-        category_contents[category] += f" {title} {content}"
+        category_contents[category] += f" {title}"
     category_keywords = {}
     for category, text in category_contents.items():
         nouns = [n for n in okt.nouns(text) if len(n) > 1]
@@ -163,7 +163,7 @@ def save_top_keywords_to_mysql(top_keywords):
     conn.commit()
     cursor.close()
     conn.close()
-    print(f"🗂️ 키워드 저장 완료: {sum(len(v) for v in top_keywords.values())}건")
+    print(f"키워드 저장 완료: {sum(len(v) for v in top_keywords.values())}건")
 
 # 키워드-뉴스 매핑 저장
 def save_keyword_news_mapping(top_keywords):
@@ -181,7 +181,7 @@ def save_keyword_news_mapping(top_keywords):
     conn.commit()
     cursor.close()
     conn.close()
-    print(f"🔗 키워드-뉴스 연결 완료")
+    print(f"키워드-뉴스 연결 완료")
 
 # 실행 순서
 save_news_to_mysql(all_news)
