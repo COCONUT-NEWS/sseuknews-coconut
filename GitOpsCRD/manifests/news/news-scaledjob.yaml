@@ -45,7 +45,6 @@ spec:
               secretKeyRef:
                 name: news-secrets
                 key: DB_NAME_NEWS
-         
         restartPolicy: OnFailure # Job 내 Pod의 컨테이너 재시작 정책.
                                  # OnFailure: 컨테이너 실패 시 Pod 내에서 재시작 (Job의 backoffLimit에 따라 Job 레벨 재시도도 있음)
                                  # Never: 컨테이너 실패 시 Pod 내에서 재시작 안함 (Job 레벨 재시도만)
