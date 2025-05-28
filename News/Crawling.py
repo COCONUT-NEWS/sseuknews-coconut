@@ -7,9 +7,6 @@ import pymysql
 from collections import Counter
 from konlpy.tag import Okt
 from config import DB_CONFIG_API, DB_CONFIGS
-import os
-
-import socket  
 
 yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%Y%m%d')
 
@@ -117,6 +114,14 @@ def save_news_to_mysql(news_data):
                 );
             """)
 
+            # 이전 데이터 초기화화
+            print(f"[{DB_CONFIG['database']}] 기존 뉴스 데이터 초기화")
+            cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
+            cursor.execute("TRUNCATE TABLE keyword_news_map")
+            cursor.execute("TRUNCATE TABLE top_keywords")
+            cursor.execute("TRUNCATE TABLE news")
+            cursor.execute("SET FOREIGN_KEY_CHECKS = 1")
+
             # 뉴스 저장
             sql = """
                 INSERT INTO news (category, title, url, content, reporter, published_at, source)
@@ -124,7 +129,7 @@ def save_news_to_mysql(news_data):
             """
             cursor.executemany(sql, news_data)
             conn.commit()
-            print(f"🗃️ [{DB_CONFIG['database']}] 뉴스 저장 완료: {len(news_data)}건")
+            print(f"[{DB_CONFIG['database']}] 뉴스 저장 완료: {len(news_data)}건")
 
         except Exception as e:
             print(f"[{DB_CONFIG['database']}] 뉴스 저장 실패: {e}")
