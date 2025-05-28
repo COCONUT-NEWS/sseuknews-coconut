@@ -2,6 +2,7 @@ apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
 metadata:
   name: news-ai-scaler
+
   namespace: default # 애플리케이션이 배포된 네임스페이스
 spec:
   scaleTargetRef:
