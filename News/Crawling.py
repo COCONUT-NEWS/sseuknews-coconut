@@ -8,6 +8,40 @@ from collections import Counter
 from konlpy.tag import Okt
 from config import DB_CONFIG_API, DB_CONFIGS
 
+# 초기화
+def truncate_all_tables():
+    for DB_CONFIG in DB_CONFIGS:
+        try:
+            conn = pymysql.connect(**DB_CONFIG)
+            cursor = conn.cursor()
+            print(f"[{DB_CONFIG['database']}] 뉴스 테이블 초기화")
+            cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
+            cursor.execute("TRUNCATE TABLE news")
+            cursor.execute("SET FOREIGN_KEY_CHECKS = 1")
+            conn.commit()
+        except Exception as e:
+            print(f"[{DB_CONFIG['database']}] news 초기화 실패: {e}")
+        finally:
+            if cursor: cursor.close()
+            if conn: conn.close()
+
+    try:
+        conn = pymysql.connect(**DB_CONFIG_API)
+        cursor = conn.cursor()
+        print(f"[{DB_CONFIG_API['database']}] 키워드 테이블 초기화")
+        cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
+        cursor.execute("TRUNCATE TABLE top_keywords")
+        cursor.execute("TRUNCATE TABLE keyword_news_map")
+        cursor.execute("SET FOREIGN_KEY_CHECKS = 1")
+        conn.commit()
+    except Exception as e:
+        print(f"[{DB_CONFIG_API['database']}] 키워드 초기화 실패: {e}")
+    finally:
+        if cursor: cursor.close()
+        if conn: conn.close()
+        
+truncate_all_tables() 
+
 yesterday = (datetime.datetime.now() - datetime.timedelta(days=1)).strftime('%Y%m%d')
 
 categories = {
@@ -113,14 +147,6 @@ def save_news_to_mysql(news_data):
                     FOREIGN KEY (news_id) REFERENCES news(id) ON DELETE CASCADE
                 );
             """)
-
-            # 이전 데이터 초기화
-            print(f"[{DB_CONFIG['database']}] 기존 뉴스 데이터 초기화")
-            cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
-            cursor.execute("TRUNCATE TABLE keyword_news_map")
-            cursor.execute("TRUNCATE TABLE top_keywords")
-            cursor.execute("TRUNCATE TABLE news")
-            cursor.execute("SET FOREIGN_KEY_CHECKS = 1")
 
             # 뉴스 저장
             sql = """
