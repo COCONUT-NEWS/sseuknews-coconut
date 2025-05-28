@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: `http://k8s-default-yykmaini-96398706a8-1571562170.ap-northeast-1.elb.amazonaws.com`,
+    baseURL: `http://www.kimsimu.com`,
 });
 
 // 키워드 조회
