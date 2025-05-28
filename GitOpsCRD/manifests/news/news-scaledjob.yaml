@@ -22,7 +22,7 @@ spec:
                   - pracite-ng-2
                   - pracite-ng-3
         containers:
-        - name: news-crawler-container # 컨테이너 이름
+        - name: news-crawler-ctn # 컨테이너 이름
           image: 875522371656.dkr.ecr.ap-northeast-1.amazonaws.com/sseuk:news # ECR 이미지 주소
           imagePullPolicy: Always # 항상 최신 이미지를 가져오도록 설정
           # ports: # Job의 Pod는 외부 서비스를 제공하지 않으므로 일반적으로 ports 설정 불필요
@@ -61,8 +61,7 @@ spec:
   triggers:
   - type: cron
     metadata:
-      timezone: "Asia/Seoul"    # 한국 시간대 설정
-      # 예시: 매일 오전 10시에 실행 (실제 원하는 시간으로 변경)
-      # 원하는 스케줄로 cron 표현식 수정 (예: "0 1 * * *" 매일 새벽 1시)
-
-      schedule: "07 14 * * *"   # KEDA ScaledJob에서는 'schedule' 필드를 사용합니다. (이전 'start'는 ScaledObject용)
+      timezone: "Asia/Seoul"    # 한국 시간대 설
+      start: "25 15 * * *"      # 매일 새벽 2시
+      end: "35 15 * * *"    # end는 보통 ScaledJob에서는 불필요 (Job은 한번 실행되고 완료되면 끝)
+      desiredReplicas: "2"    # Job 1개 생성  
