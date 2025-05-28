@@ -176,7 +176,7 @@ def save_news_to_mysql(news_data):
 def extract_top_keywords(news_data, top_n=6):
     okt = Okt()
     category_contents = {}
-    for category, title, url, content, *_ in news_data:
+    for category, title, *_ in news_data:
         category_contents.setdefault(category, "")
         category_contents[category] += f" {title}"
     category_keywords = {}
@@ -210,7 +210,7 @@ def save_keyword_news_mapping(top_keywords):
     for category, keywords in top_keywords.items():
         for keyword, _ in keywords:
             for news_id, title, content in news_rows:
-                if keyword in title or keyword in content:
+                if keyword in title:
                     cursor.execute(sql, (keyword, news_id))
     conn.commit()
     cursor.close()
