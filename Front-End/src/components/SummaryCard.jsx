@@ -16,25 +16,6 @@ export default function SummaryCard({ summary, onClose }) {
         }, 300); // transition 시간과 맞춰야 함
     };
 
-    // 요약 텍스트를 문장별로 두 줄 간격으로 렌더링
-    const formattedSummary = (summary || '🔄 요약 중 🔄')
-        .split(/(?<=[.!?])\s+/)
-        .map((sentence, index) => (
-            <p
-                key={index}
-                style={{
-                    marginBottom: '16px',
-                    lineHeight: '180%',
-                    fontSize: '16px',
-                    fontWeight: 500,
-                    color: '#29292A',
-                    fontFamily: 'Pretendard, sans-serif',
-                }}
-            >
-                {sentence.trim()}
-            </p>
-        ));
-
     return (
         <div
             style={{
@@ -102,7 +83,20 @@ export default function SummaryCard({ summary, onClose }) {
                         margin: '12px 0',
                     }}
                 >
-                    {formattedSummary}
+                    <p
+                        style={{
+                            flex: '1 0 0',
+                            color: '#29292A',
+                            fontFamily: 'Pretendard, sans-serif',
+                            fontSize: '15px',
+                            fontWeight: 500,
+                            lineHeight: '180%',
+                            whiteSpace: 'pre-line', // ✅ 줄바꿈 유지
+                            margin: 0,
+                        }}
+                    >
+                        {summary || '🔄 요약 중 🔄'}
+                    </p>
                 </div>
                 
                 {/* 확인 버튼 */}

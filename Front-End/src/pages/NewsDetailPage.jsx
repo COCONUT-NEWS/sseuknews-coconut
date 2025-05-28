@@ -88,7 +88,19 @@ export default function NewsDetailPage({ newsId, onBack }) {
                 }}
             >
                 {news.content}
-                <p> </p>
+            </p>
+
+            {/* 기자 이름 */}
+            <p
+                style={{
+                    margin: '16px 8px 24px',
+                    color: '#29292A',
+                    fontFamily: 'Pretendard, sans-serif',
+                    fontSize: '15px',
+                    fontWeight: 500,
+                    lineHeight: '160%',
+                }}
+            >
                 {news.reporter}
             </p>
 
