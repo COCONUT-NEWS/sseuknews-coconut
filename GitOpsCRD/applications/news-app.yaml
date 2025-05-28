@@ -21,6 +21,8 @@ spec:
     syncOptions:
     - CreateNamespace=true
   # 여기에 ignoreDifferences를 추가합니다.
+  #ignoreDifferences:
+  #- group: apps
   # ignoreDifferences:
   # - group: apps
   #  kind: Deployment
