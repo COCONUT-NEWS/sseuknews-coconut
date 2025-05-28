@@ -81,8 +81,10 @@ export default function NewsDetailPage({ newsId, onBack }) {
                 color: '#29292A',
                 fontFamily: 'Pretendard, sans-serif',
                 fontSize: '16px',
-                fontWeight: 500,
-                lineHeight: '140%',
+                fontWeight: 400,
+                lineHeight: '180%',
+                letterSpacing: '0.3px',
+                whiteSpace: 'pre-line',
                 }}
             >
                 {news.content}
