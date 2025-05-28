@@ -33,10 +33,10 @@ export const fetchNewsList = async (categoryKey) => {
 // 키워드 선택 후 뉴스 리스트 조회
 export const fetchNewsListByKeyword = async (categoryKey, keyword) => {
     try {
-        const response = await instance.get('/api/v1/news/keyword', {
+        const response = await instance.get('/api/v1/news/search', {
             params: {
                 category: categoryKey,
-                keyword: encodeURIComponent(keyword), // 한글 인코딩 처리
+                keyword: keyword,
             },
         });
         return response.data.data || [];
