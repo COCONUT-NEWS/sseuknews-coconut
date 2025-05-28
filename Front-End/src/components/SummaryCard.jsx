@@ -16,6 +16,25 @@ export default function SummaryCard({ summary, onClose }) {
         }, 300); // transition 시간과 맞춰야 함
     };
 
+    // 요약 텍스트를 문장별로 두 줄 간격으로 렌더링
+    const formattedSummary = (summary || '🔄 요약 중 🔄')
+        .split(/(?<=[.!?])\s+/)
+        .map((sentence, index) => (
+            <p
+                key={index}
+                style={{
+                    marginBottom: '16px',
+                    lineHeight: '180%',
+                    fontSize: '16px',
+                    fontWeight: 500,
+                    color: '#29292A',
+                    fontFamily: 'Pretendard, sans-serif',
+                }}
+            >
+                {sentence.trim()}
+            </p>
+        ));
+
     return (
         <div
             style={{
@@ -33,6 +52,8 @@ export default function SummaryCard({ summary, onClose }) {
                     position: 'relative',
                     bottom: visible ? '0px' : '-500px',
                     width: '390px',
+                    maxHeight: '80vh',
+                    overflowY: 'auto',
                     backgroundColor: '#FFFFFF',
                     borderRadius: '20px 20px 0px 0px',
                     transition: 'bottom 0.3s ease-in-out',
@@ -81,20 +102,9 @@ export default function SummaryCard({ summary, onClose }) {
                         margin: '12px 0',
                     }}
                 >
-                    <p
-                        style={{
-                            flex: '1 0 0',
-                            color: '#29292A',
-                            fontFamily: 'Pretendard, sans-serif',
-                            fontSize: '16px',
-                            fontWeight: 500,
-                            lineHeight: '140%',
-                            margin: 0,
-                        }}
-                    >
-                        {summary || '요약 내용을 불러오지 못했습니다.'}
-                    </p>
+                    {formattedSummary}
                 </div>
+                
                 {/* 확인 버튼 */}
                 <button
                     onClick={handleClose}
