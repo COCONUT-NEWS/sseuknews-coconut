@@ -72,32 +72,24 @@ export default function SummaryCard({ summary, onClose }) {
                 {/* 요약 본문 박스 */}
                 <div
                     style={{
-                        display: 'flex',
                         width: '358px',
                         padding: '12px',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: '10px',
                         borderRadius: '16px',
                         backgroundColor: '#F2F4F6',
                         margin: '12px 0',
+                        maxHeight: '300px',
+                        overflowY: 'auto',
+                        whiteSpace: 'pre-wrap',
+                        fontSize: '16px',
+                        fontWeight: 500,
+                        color: '#29292A',
+                        fontFamily: 'Pretendard, sans-serif',
+                        lineHeight: '180%',
                     }}
                 >
-                    <p
-                        style={{
-                            flex: '1 0 0',
-                            color: '#29292A',
-                            fontFamily: 'Pretendard, sans-serif',
-                            fontSize: '15px',
-                            fontWeight: 500,
-                            lineHeight: '180%',
-                            whiteSpace: 'pre-line', // ✅ 줄바꿈 유지
-                            margin: 0,
-                        }}
-                    >
-                        {summary || '🔄 요약 중 🔄'}
-                    </p>
+                {summary || '🔄 요약 중 🔄'}
                 </div>
+
                 
                 {/* 확인 버튼 */}
                 <button
