@@ -36,7 +36,7 @@ export const fetchNewsListByKeyword = async (categoryKey, keyword) => {
         const response = await instance.get('/api/v1/news/keyword', {
             params: {
                 category: categoryKey,
-                keyword: keyword,
+                keyword: encodeURIComponent(keyword), // 한글 인코딩 처리
             },
         });
         return response.data.data || [];
