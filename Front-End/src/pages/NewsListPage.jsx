@@ -11,7 +11,7 @@ import TrendNowTitle from "../components/TrendNowTitle";
 import KeywordSelector from "../components/KeywordSelector";
 import NewsCard from "../components/NewsCard";
 
-import { fetchKeywords, fetchNewsListByKeyword } from "../api/api.js";
+import { fetchKeywords, fetchNewsList, fetchNewsListByKeyword } from "../api/api";
 
 export default function NewsListPage({ category, onBack, onSelectNews }) {
     const categoryIcons = {
@@ -53,7 +53,7 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
 
     // 뉴스 리스트 가져오기(keyword 선택 전, keyword 선택 후)
     useEffect(() => {
-      const fetchNewsList = async () => {
+      const loadNewsList = async () => {
         const categoryKey = convertCategoryToKey(category);
         let data;
 
@@ -68,7 +68,7 @@ export default function NewsListPage({ category, onBack, onSelectNews }) {
         setNewsList(data);
       };
 
-      fetchNewsList();
+      loadNewsList();
     }, [category, selectedKeyword]);
 
   return (
