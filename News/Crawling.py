@@ -148,6 +148,14 @@ def save_news_to_mysql(news_data):
                 );
             """)
 
+            # 이전 데이터 초기화화
+            print(f"[{DB_CONFIG['database']}] 기존 뉴스 데이터 초기화")
+            cursor.execute("SET FOREIGN_KEY_CHECKS = 0")
+            cursor.execute("TRUNCATE TABLE keyword_news_map")
+            cursor.execute("TRUNCATE TABLE top_keywords")
+            cursor.execute("TRUNCATE TABLE news")
+            cursor.execute("SET FOREIGN_KEY_CHECKS = 1")
+
             # 뉴스 저장
             sql = """
                 INSERT INTO news (category, title, url, content, reporter, published_at, source)
