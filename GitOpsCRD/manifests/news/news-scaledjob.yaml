@@ -64,5 +64,5 @@ spec:
       timezone: "Asia/Seoul"    # 한국 시간대 설정
       # 예시: 매일 오전 10시에 실행 (실제 원하는 시간으로 변경)
       # 원하는 스케줄로 cron 표현식 수정 (예: "0 1 * * *" 매일 새벽 1시)
-      schedule: "35 13 * * *"   # KEDA ScaledJob에서는 'schedule' 필드를 사용합니다. (이전 'start'는 ScaledObject용)
+      schedule: "05 14 * * *"   # KEDA ScaledJob에서는 'schedule' 필드를 사용합니다. (이전 'start'는 ScaledObject용)
                                 # "00 10 * * *" -> 매일 오전 10시 00분
