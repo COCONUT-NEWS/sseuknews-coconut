@@ -62,6 +62,6 @@ spec:
   - type: cron
     metadata:
       timezone: "Asia/Seoul"    # 한국 시간대 설
-      start: "15 09 * * *"      # 매일 새벽 2시
-      end: "30 09 * * *"    # end는 보통 ScaledJob에서는 불필요 (Job은 한번 실행되고 완료되면 끝)
+      start: "35 09 * * *"      # 매일 새벽 2시
+      end: "40 09 * * *"    # end는 보통 ScaledJob에서는 불필요 (Job은 한번 실행되고 완료되면 끝)
       desiredReplicas: "2"    # Job 1개 생성  
