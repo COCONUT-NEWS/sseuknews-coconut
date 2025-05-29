@@ -61,6 +61,7 @@ spec:
   triggers:
   - type: cron
     metadata:
-      timezone: "Asia/Seoul"    # 한국 시간대 설
-      start: "10 10 * * *"      # 매일 새벽 2시
-      end: "15 10 * * *"    # end는 보통 ScaledJob에서는 불필요 (Job은 한번 실행되고 완료되면 끝)
+      timezone: "Asia/Seoul"    # 한국 시간대 
+      start: "20 10 * * *"      # 매일 오전 10 10분 데이터 크롤링 시작작(테스트)
+      end: "25 10 * * *"        # 10시 15분까지 작업
+      desiredReplicas: "2"
