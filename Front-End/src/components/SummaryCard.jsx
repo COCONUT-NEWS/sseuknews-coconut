@@ -85,6 +85,7 @@ export default function SummaryCard({ summary, onClose }) {
                         color: '#29292A',
                         fontFamily: 'Pretendard, sans-serif',
                         lineHeight: '180%',
+                        textAlign: summary ? 'left' : 'center',
                     }}
                 >
                 {summary || '🔄 요약 중 🔄'}
